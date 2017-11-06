@@ -1,0 +1,50 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: media-hub
+  name: media-hub
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: media-hub
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  revisionHistoryLimit: 5
+  template:
+    metadata:
+      labels:
+        app: media-hub
+    spec:
+      containers:
+      - image: beaware/media-hub:IMAGE_TAG
+        imagePullPolicy: Always
+        name: media-hub
+        ports:
+        - containerPort: 80
+          name: http
+          protocol: TCP
+        resources:
+          requests:
+            cpu: 200m
+            memory: 256Mi
+        env:
+          - name: SECRET_MH_API_KEY
+            valueFrom:
+             secretKeyRef:
+              name: mh-secret2
+              key: api_key
+          - name: SECRET_MH_BROKERS
+            valueFrom:
+             secretKeyRef:
+              name: mh-secret2
+              key: kafka_brokers_sasl
+          - name: SECRET_MONGO_URI
+            valueFrom:
+              secretKeyRef:
+                name: mongo-secret
+                key: uri
