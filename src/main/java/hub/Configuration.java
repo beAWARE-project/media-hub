@@ -11,7 +11,20 @@ package hub;
  */
 public class Configuration {
     
-    public static String IP = "video-analysis";
-    public static int port = 7777;
+    public static String video_IP = "video-analysis";//"160.40.49.112";
+    public static int video_port = 7777;
+    
+    public static String image_IP = "image-analysis";
+    public static int image_port = 7788;
+    
+    public static String audio_IP = "160.40.49.114";
+    public static int audio_port = 2004;
+    
+    public static String JAAS_CONFIG_PROPERTY = "java.security.auth.login.config";
+    public static String key = "key";
+    
+    public static String incident_report = "TOP021_INCIDENT_REPORT";
+    public static String video_analyzed = "TOP017_video_analyzed";
+    public static String image_analyzed = "TOP018_image_analyzed";
     
 }
