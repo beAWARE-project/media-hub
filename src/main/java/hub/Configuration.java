@@ -18,13 +18,14 @@ public class Configuration {
     public static int image_port = 7788;
     
     public static String audio_IP = "160.40.49.114";
-    public static int audio_port = 2004;
+    public static int audio_port = 2030;
     
     public static String JAAS_CONFIG_PROPERTY = "java.security.auth.login.config";
     public static String key = "key";
     
-    public static String incident_report = "TOP021_INCIDENT_REPORT";
-    public static String video_analyzed = "TOP017_video_analyzed";
-    public static String image_analyzed = "TOP018_image_analyzed";
+    public static String incident_report_topic = "TOP021_INCIDENT_REPORT";
+    public static String video_analyzed_topic = "TOP017_video_analyzed";
+    public static String image_analyzed_topic = "TOP018_image_analyzed";
+    public static String audio_analyzed_topic = "TOP010_AUDIO_ANALYZED";
     
 }

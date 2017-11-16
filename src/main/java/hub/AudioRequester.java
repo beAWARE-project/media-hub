@@ -13,48 +13,87 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.*;
 import java.net.*;
-import java.nio.charset.StandardCharsets;
-import java.time.Instant;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import json.MessageFromVA;
-import json.MessageToVA;
+import json.Attachment;
+import json.AudioAnalyzed;
+import json.AudioAnalyzedBody;
+import json.Header;
+import json.IncidentReport;
+import json.MessageFromASR;
+import json.MessageToASR;
+import mykafka.Bus;
 
-public class AudioRequester{
+public class AudioRequester extends Thread{
     Socket soc;
-    DataInputStream din;
-    DataOutputStream dout;
-    AudioRequester(){}
+    ObjectInputStream din;
+    ObjectOutputStream dout;
     Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-    String over = "Msg from VA received";
+    IncidentReport incidentReport;
+    Attachment attachment;
+    Bus bus = new Bus();
     
-    void run()
+    String start = "Connection successful";
+    String ongoing = "Msg from Hub received. File is being processed..";
+    String over = "bye";
+    
+    public AudioRequester(){
+        
+    }
+    
+    public AudioRequester(IncidentReport incidentReport, Attachment attachment){
+        this.incidentReport = incidentReport;
+        this.attachment = attachment;
+    }
+    
+    @Override
+    public void run()
     {
-        Instant startTimeUTC = Instant.now();
-        String URL = "http://object-store-app.eu-gb.mybluemix.net/objectStorage?file=flood.mp4";
-        MessageToVA newMessageToVA = new MessageToVA(startTimeUTC.toString(), URL);
-        String request = gson.toJson(newMessageToVA);
-        request = "hello";
+        MessageToASR newMessageToASR = new MessageToASR(attachment.getAttachmentURL(), attachment.getAttachmentTimeStampUTC());
+        String request = gson.toJson(newMessageToASR);
+        
         try{      
             
             soc = new Socket(Configuration.audio_IP, Configuration.audio_port);  
             
-            din = new DataInputStream(soc.getInputStream());
-            dout = new DataOutputStream(soc.getOutputStream());
+            dout = new ObjectOutputStream(soc.getOutputStream());
+            din = new ObjectInputStream(soc.getInputStream());
             
-            sendMessage(request);
+            String message;
+            do{
+                message = readMessage();
 
-            /*readMessage();
+                boolean terminate = true;
 
-            String response = readMessage();
-            MessageFromVA messageFromVA = gson.fromJson(response, MessageFromVA.class);
-            System.out.println(messageFromVA.getVidAnalyzed());
-            System.out.println(messageFromVA.getVidAnalysis());
+                if (message.equals(start)){
+                    sendMessage(request);
+                    terminate = false;
+                }       
+
+                if (message.equals(ongoing)){
+                    terminate = false;
+                }
+
+                if ( terminate == true && !message.equals(over) ) {
+                    
+                    MessageFromASR messageFromASR = gson.fromJson(message, MessageFromASR.class);
+
+                    AudioAnalyzedBody audioAnalyzedBody = new AudioAnalyzedBody(messageFromASR.getIDRef(), attachment.getAttachmentURL(), attachment.getAttachmentTimeStampUTC());
+                    Header header = incidentReport.getHeader();
+                    header.setTopicName(Configuration.audio_analyzed_topic);
+                    AudioAnalyzed audioAnalyzed = new AudioAnalyzed(header, audioAnalyzedBody);
+                    String topic_message = gson.toJson(audioAnalyzed);
+                    bus.post(Configuration.audio_analyzed_topic, topic_message);
+                    
+                    sendMessage(over);
+                }
+                
+            }while(!message.equals(over));
             
-            sendMessage(over);*/
-            
-        }catch(IOException e){
-            System.out.println("Error: " + e);
+        } catch (IOException | InterruptedException | ExecutionException | TimeoutException ex) {
+            Logger.getLogger(AudioRequester.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
             try{
                 din.close();
@@ -66,11 +105,10 @@ public class AudioRequester{
         }
     }
     
-    void sendMessage(String msg)
+    private void sendMessage(String msg)
     {
         try{
-            byte[] bytes = msg.getBytes(StandardCharsets.UTF_8);
-            dout.write(bytes);
+            dout.writeObject(msg);
             dout.flush();
             System.out.println("client> " + msg);
         }
@@ -79,16 +117,13 @@ public class AudioRequester{
         }
     }
     
-    String readMessage()
+    private String readMessage()
     {
         String response = "";
         try {
-            byte b[] = new byte[1024];
-            din.read(b);
-            response = new String(b, StandardCharsets.UTF_8);
-            response = response.replaceAll("\u0000.*", "");
+            response = (String) din.readObject();
             System.out.println("server> " + response); 
-        } catch (IOException ex) {
+        } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(AudioRequester.class.getName()).log(Level.SEVERE, null, ex);
         }
         return response;

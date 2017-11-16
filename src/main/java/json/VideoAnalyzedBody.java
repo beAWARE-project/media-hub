@@ -16,6 +16,7 @@ public class VideoAnalyzedBody {
     
     String media_timestamp;
     Position location;
+    int incidentID;
     String vid_original;
     String vid_analyzed;
     String vid_analysis;
@@ -24,10 +25,11 @@ public class VideoAnalyzedBody {
         
     }
     
-    public VideoAnalyzedBody(String media_timestamp, Position location, String vid_original,
-                    String vid_analyzed, String vid_analysis){
+    public VideoAnalyzedBody(String media_timestamp, Position location, int incidentID,
+                                String vid_original, String vid_analyzed, String vid_analysis){
         this.media_timestamp = media_timestamp;
         this.location = location;
+        this.incidentID = incidentID;
         this.vid_original = vid_original;
         this.vid_analyzed = vid_analyzed;
         this.vid_analysis = vid_analysis;

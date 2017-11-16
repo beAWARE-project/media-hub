@@ -65,12 +65,12 @@ public class VideoRequester extends Thread{
             
             sendMessage(over);
             
-            VideoAnalyzedBody videoAnalyzedBody = new VideoAnalyzedBody(attachment.getAttachmentTimeStampUTC() , incidentReport.getBody().getPosition(), attachment.getAttachmentURL(), messageFromVA.getVidAnalyzed(), messageFromVA.getVidAnalysis());
+            VideoAnalyzedBody videoAnalyzedBody = new VideoAnalyzedBody(attachment.getAttachmentTimeStampUTC() , incidentReport.getBody().getPosition(), incidentReport.getBody().getIncidentID(), attachment.getAttachmentURL(), messageFromVA.getVidAnalyzed(), messageFromVA.getVidAnalysis());
             Header header = incidentReport.getHeader();
-            header.setTopicName(Configuration.video_analyzed);
+            header.setTopicName(Configuration.video_analyzed_topic);
             VideoAnalyzed videoAnalyzed = new VideoAnalyzed(header, videoAnalyzedBody);
             String message = gson.toJson(videoAnalyzed);
-            bus.post(Configuration.video_analyzed, message);
+            bus.post(Configuration.video_analyzed_topic, message);
             
         } catch (IOException | InterruptedException | ExecutionException | TimeoutException ex) {
             Logger.getLogger(VideoRequester.class.getName()).log(Level.SEVERE, null, ex);

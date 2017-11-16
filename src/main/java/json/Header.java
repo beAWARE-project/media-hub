@@ -57,4 +57,8 @@ public class Header {
         this.topicName = topicName;
     }
     
+    public String getSender(){
+        return sender;
+    }
+    
 }

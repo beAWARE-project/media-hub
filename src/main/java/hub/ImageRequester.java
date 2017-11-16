@@ -24,11 +24,7 @@ import json.ImageAnalyzed;
 import json.ImageAnalyzedBody;
 import json.IncidentReport;
 import json.MessageFromIA;
-import json.MessageFromVA;
 import json.MessageToIA;
-import json.MessageToVA;
-import json.VideoAnalyzed;
-import json.VideoAnalyzedBody;
 import mykafka.Bus;
 
 public class ImageRequester extends Thread{
@@ -68,12 +64,12 @@ public class ImageRequester extends Thread{
             
             sendMessage(over);
             
-            ImageAnalyzedBody imageAnalyzedBody = new ImageAnalyzedBody(attachment.getAttachmentTimeStampUTC() , incidentReport.getBody().getPosition(), attachment.getAttachmentURL(), messageFromIA.getImgAnalyzed(), messageFromIA.getImgAnalysis());
+            ImageAnalyzedBody imageAnalyzedBody = new ImageAnalyzedBody(attachment.getAttachmentTimeStampUTC() , incidentReport.getBody().getPosition(), incidentReport.getBody().getIncidentID(), attachment.getAttachmentURL(), messageFromIA.getImgAnalyzed(), messageFromIA.getImgAnalysis());
             Header header = incidentReport.getHeader();
-            header.setTopicName(Configuration.image_analyzed);
+            header.setTopicName(Configuration.image_analyzed_topic);
             ImageAnalyzed imageAnalyzed = new ImageAnalyzed(header, imageAnalyzedBody);
             String message = gson.toJson(imageAnalyzed);
-            bus.post(Configuration.image_analyzed, message);
+            bus.post(Configuration.image_analyzed_topic, message);
             
         } catch (IOException | InterruptedException | ExecutionException | TimeoutException ex) {
             Logger.getLogger(ImageRequester.class.getName()).log(Level.SEVERE, null, ex);
