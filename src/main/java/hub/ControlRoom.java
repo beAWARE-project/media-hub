@@ -59,8 +59,8 @@ public class ControlRoom {
                                         videoRequester.start();
                                         break;
                                     case "audio":
-                                        //AudioRequester audioRequester = new AudioRequester(incidentReport, attachment);
-                                        //audioRequester.start();
+                                        AudioRequester audioRequester = new AudioRequester(incidentReport, attachment);
+                                        audioRequester.start();
                                         break;
                                 }
                             }
