@@ -13,7 +13,7 @@ public class ImageAnalyzedBody {
     
     String media_timestamp;
     Position location;
-    int incidentID;
+    String incidentID;
     String im_original;
     String im_analyzed;
     String im_analysis;
@@ -22,7 +22,7 @@ public class ImageAnalyzedBody {
         
     }
     
-    public ImageAnalyzedBody(String media_timestamp, Position location, int incidentID,
+    public ImageAnalyzedBody(String media_timestamp, Position location, String incidentID,
                                 String im_original, String im_analyzed, String im_analysis){
         this.media_timestamp = media_timestamp;
         this.location = location;

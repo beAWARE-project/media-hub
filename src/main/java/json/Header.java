@@ -15,7 +15,7 @@ public class Header {
     int topicMajorVersion;
     int topicMinorVersion;
     String sender;
-    int msgIdentifier;
+    String msgIdentifier;
     String sentUTC;
     String status;
     String actionType;
@@ -32,7 +32,7 @@ public class Header {
     }
     
     public Header(String topicName, int topicMajorVersion, int topicMinorVersion,
-                    String sender, int msgIdentifier, String sentUTC, String status,
+                    String sender, String msgIdentifier, String sentUTC, String status,
                     String actionType, String specificSender, String scope,
                     String district, String recipients, int code, String note,
                     String references){

@@ -15,7 +15,7 @@ import java.util.List;
 public class IncidentReportBody {
     
     String incidentOriginator;
-    int incidentID;
+    String incidentID;
     String language;
     String incidentCategory;
     String incidentType;
@@ -33,7 +33,7 @@ public class IncidentReportBody {
         
     }
     
-    public IncidentReportBody(String incidentOriginator, int incidentID, String language,
+    public IncidentReportBody(String incidentOriginator, String incidentID, String language,
                     String incidentCategory, String incidentType, String priority, String severity,
                     String certainty, String startTimeUTC, String expirationTimeUTC,
                     String title, String description, Position position, List<Attachment> attachments){
@@ -61,7 +61,7 @@ public class IncidentReportBody {
         return position;
     }
     
-    public int getIncidentID(){
+    public String getIncidentID(){
         return incidentID;
     }
     
