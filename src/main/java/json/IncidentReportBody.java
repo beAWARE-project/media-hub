@@ -65,4 +65,8 @@ public class IncidentReportBody {
         return incidentID;
     }
     
+    public String getLanguage(){
+        return language;
+    }
+    
 }

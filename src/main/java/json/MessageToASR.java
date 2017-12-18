@@ -17,8 +17,8 @@ public class MessageToASR {
         
     }
     
-    public MessageToASR(String URL, String timestamp){
-        this.message = new MessageToASRContent(URL, timestamp);
+    public MessageToASR(String URL, String timestamp, String language, String incidentID){
+        this.message = new MessageToASRContent(URL, timestamp, language, incidentID);
     }
     
 }

@@ -51,7 +51,7 @@ public class AudioRequester extends Thread{
     @Override
     public void run()
     {
-        MessageToASR newMessageToASR = new MessageToASR(attachment.getAttachmentURL(), attachment.getAttachmentTimeStampUTC());
+        MessageToASR newMessageToASR = new MessageToASR(attachment.getAttachmentURL(), attachment.getAttachmentTimeStampUTC(), incidentReport.getBody().getLanguage(), incidentReport.getBody().getIncidentID());
         String request = gson.toJson(newMessageToASR);
         
         try{      
@@ -80,7 +80,7 @@ public class AudioRequester extends Thread{
                     
                     MessageFromASR messageFromASR = gson.fromJson(message, MessageFromASR.class);
 
-                    AudioAnalyzedBody audioAnalyzedBody = new AudioAnalyzedBody(messageFromASR.getIDRef(), attachment.getAttachmentURL(), attachment.getAttachmentTimeStampUTC());
+                    AudioAnalyzedBody audioAnalyzedBody = new AudioAnalyzedBody(messageFromASR.getIDRef(), attachment.getAttachmentTimeStampUTC(), incidentReport.getBody().getIncidentID(), messageFromASR.getLanguage());
                     Header header = incidentReport.getHeader();
                     header.setTopicName(Configuration.audio_analyzed_topic);
                     AudioAnalyzed audioAnalyzed = new AudioAnalyzed(header, audioAnalyzedBody);

@@ -12,17 +12,23 @@ package json;
 public class MessageFromASR {
     
     String IDRef;
+    String language;
     
     public MessageFromASR(){
         
     }
     
-    public MessageFromASR(String IDRef){
+    public MessageFromASR(String IDRef, String language){
         this.IDRef = IDRef;
+        this.language = language;
     }
     
     public String getIDRef(){
         return IDRef;
+    }
+    
+    public String getLanguage(){
+        return language;
     }
     
 }
