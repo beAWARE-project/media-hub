@@ -17,8 +17,8 @@ public class Configuration {
     public static String image_IP = "image-analysis";
     public static int image_port = 7788;//9999
     
-    public static String audio_IP = "asr"; //160.40.49.114";
-    public static int audio_port = 7766;//2031;
+    public static String audio_IP = "asr";//"160.40.49.114";
+    public static int audio_port = 7766;//2087;
     
     public static String JAAS_CONFIG_PROPERTY = "java.security.auth.login.config";
     public static String key = "key";

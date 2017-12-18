@@ -9,24 +9,26 @@ package json;
  *
  * @author andreadisst
  */
-public class MessageFromASR {
+public class MessageFromASRContent {
     
-    MessageFromASRContent message;
+    String IDRef;
+    String language;
     
-    public MessageFromASR(){
+    public MessageFromASRContent(){
         
     }
     
-    public MessageFromASR(String IDRef, String language){
-        this.message = new MessageFromASRContent(IDRef, language);
+    public MessageFromASRContent(String IDRef, String language){
+        this.IDRef = IDRef;
+        this.language = language;
     }
     
     public String getIDRef(){
-        return message.getIDRef();
+        return IDRef;
     }
     
     public String getLanguage(){
-        return message.getLanguage();
+        return language;
     }
     
 }
