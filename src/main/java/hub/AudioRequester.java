@@ -53,7 +53,7 @@ public class AudioRequester extends Thread{
     {
         MessageToASR newMessageToASR = new MessageToASR(attachment.getAttachmentURL(), attachment.getAttachmentTimeStampUTC(), incidentReport.getBody().getLanguage(), incidentReport.getBody().getIncidentID());
         String request = gson.toJson(newMessageToASR);
-        
+       
         try{      
             
             soc = new Socket(Configuration.audio_IP, Configuration.audio_port);  

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: media-hub
+  name: media-hub
+spec:
+  selector:
+    app: media-hub
+  ports:
+  - name: http
+    port: 2020
+    protocol: TCP
+    targetPort: 80
