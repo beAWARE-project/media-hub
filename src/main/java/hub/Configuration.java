@@ -11,7 +11,7 @@ package hub;
  */
 public class Configuration {
     
-    public static String video_IP = "video-analysis";//"160.40.49.112";
+    public static String video_IP = "160.40.49.112";//"video-analysis";
     public static int video_port = 7777;
     
     public static String image_IP = "image-analysis";
