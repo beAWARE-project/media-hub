@@ -11,20 +11,20 @@ package json;
  */
 public class MessageFromASRContent {
     
-    String IDRef;
+    String transcription;
     String language;
     
     public MessageFromASRContent(){
         
     }
     
-    public MessageFromASRContent(String IDRef, String language){
-        this.IDRef = IDRef;
+    public MessageFromASRContent(String transcription, String language){
+        this.transcription = transcription;
         this.language = language;
     }
     
-    public String getIDRef(){
-        return IDRef;
+    public String getTranscription(){
+        return transcription;
     }
     
     public String getLanguage(){

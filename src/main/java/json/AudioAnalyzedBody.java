@@ -5,26 +5,51 @@
  */
 package json;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author andreadisst
  */
 public class AudioAnalyzedBody {
     
-    String transcription_ID;
-    String timestamp;
+    String incidentOriginator;
     String incidentID;
     String language;
+    /*String incidentCategory;
+    String incidentType;
+    String priority;
+    String severity;
+    String certainty;
+    String expirationTimeUTC;
+    String title;*/
+    String startTimeUTC;
+    String description;
+    Position position;
+    List<AudioAnalyzedAttachment> attachments = new ArrayList<>();
     
     public AudioAnalyzedBody(){
         
     }
     
-    public AudioAnalyzedBody(String transcription_ID, String timestamp, String incidentID, String language){
-        this.transcription_ID = transcription_ID;
-        this.timestamp = timestamp;
+    public AudioAnalyzedBody(String incidentOriginator, String incidentID, String language,
+                    /*String incidentCategory, String incidentType, String priority, String severity,
+                    String certainty, String expirationTimeUTC, String title,*/ String startTimeUTC, 
+                    String description, Position position, List<AudioAnalyzedAttachment> attachments){
+        this.incidentOriginator = incidentOriginator;
         this.incidentID = incidentID;
         this.language = language;
+        /*this.incidentCategory = incidentCategory;
+        this.incidentType = incidentType;
+        this.priority = priority;
+        this.severity = severity;
+        this.certainty = certainty;
+        this.expirationTimeUTC = expirationTimeUTC;
+        this.title = title;*/
+        this.startTimeUTC = startTimeUTC;
+        this.description = description;
+        this.position = position;
+        this.attachments = attachments;
     }
-    
 }

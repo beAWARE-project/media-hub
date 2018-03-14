@@ -69,4 +69,8 @@ public class IncidentReportBody {
         return language;
     }
     
+    public String getDescription(){
+        return description;
+    }
+    
 }

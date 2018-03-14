@@ -17,12 +17,12 @@ public class MessageFromASR {
         
     }
     
-    public MessageFromASR(String IDRef, String language){
-        this.message = new MessageFromASRContent(IDRef, language);
+    public MessageFromASR(String transcription, String language){
+        this.message = new MessageFromASRContent(transcription, language);
     }
     
-    public String getIDRef(){
-        return message.getIDRef();
+    public String getTranscription(){
+        return message.getTranscription();
     }
     
     public String getLanguage(){
