@@ -13,21 +13,18 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.*;
 import java.net.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import json.Attachment;
 import json.AudioAnalyzed;
-import json.AudioAnalyzedAttachment;
 import json.AudioAnalyzedBody;
 import json.Header;
 import json.IncidentReport;
 import json.MessageFromASR;
 import json.MessageToASR;
-import json.Position;
+import json.TextInformation;
 import mykafka.Bus;
 
 public class AudioRequester extends Thread{
@@ -84,11 +81,9 @@ public class AudioRequester extends Thread{
                     
                     MessageFromASR messageFromASR = gson.fromJson(message, MessageFromASR.class);
 
-                    AudioAnalyzedAttachment audioAnalyzedAttachment = new AudioAnalyzedAttachment("", "transcription", messageFromASR.getTranscription(), attachment.getAttachmentTimeStampUTC());
-                    List<AudioAnalyzedAttachment> attachments = new ArrayList<>();
-                    attachments.add(audioAnalyzedAttachment);
+                    TextInformation textInformation = new TextInformation("", "transcription", messageFromASR.getTranscription());
                     String date = new java.text.SimpleDateFormat("yyyy-MM-d'T'HH:mm:ss'Z'").format(new java.util.Date(System.currentTimeMillis()));
-                    AudioAnalyzedBody audioAnalyzedBody = new AudioAnalyzedBody("ASR", incidentReport.getBody().getIncidentID(), messageFromASR.getLanguage(), date, incidentReport.getBody().getDescription(), incidentReport.getBody().getPosition(), attachments);
+                    AudioAnalyzedBody audioAnalyzedBody = new AudioAnalyzedBody("ASR", incidentReport.getBody().getIncidentID(), messageFromASR.getLanguage(), date, incidentReport.getBody().getDescription(), incidentReport.getBody().getPosition(), textInformation);
                     Header header = incidentReport.getHeader();
                     header.setTopicName(Configuration.audio_analyzed_topic);
                     AudioAnalyzed audioAnalyzed = new AudioAnalyzed(header, audioAnalyzedBody);
