@@ -80,9 +80,9 @@ public class AudioRequester extends Thread{
                     
                     MessageFromASR messageFromASR = gson.fromJson(message, MessageFromASR.class);
 
-                    String date = new java.text.SimpleDateFormat("yyyy-MM-d'T'HH:mm:ss'Z'").format(new java.util.Date(System.currentTimeMillis()));
-                    AudioAnalyzedBody audioAnalyzedBody = new AudioAnalyzedBody("ASR", incidentReport.getBody().getIncidentID(), messageFromASR.getLanguage(), date, messageFromASR.getTranscription(), incidentReport.getBody().getPosition());
                     Header header = incidentReport.getHeader();
+                    String date = new java.text.SimpleDateFormat("yyyy-MM-d'T'HH:mm:ss'Z'").format(new java.util.Date(System.currentTimeMillis()));
+                    AudioAnalyzedBody audioAnalyzedBody = new AudioAnalyzedBody(header.getSender(), incidentReport.getBody().getIncidentID(), messageFromASR.getLanguage(), date, messageFromASR.getTranscription(), incidentReport.getBody().getPosition());
                     header.setTopicName(Configuration.audio_analyzed_topic);
                     header.setSender("ASR");
                     AudioAnalyzed audioAnalyzed = new AudioAnalyzed(header, audioAnalyzedBody);
