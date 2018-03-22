@@ -48,11 +48,8 @@ public class ImageRequester extends Thread{
     @Override
     public void run()
     {
-        try {
-            writer = new BufferedWriter(new FileWriter(logFilename));
-        } catch (IOException ex) {
-            System.out.println(ex);
-        }
+        log("ImageRequester started\n");
+        log(attachment.getAttachmentURL() + "\n");
         MessageToIA newMessageToIA = new MessageToIA(attachment.getAttachmentURL());
         String request = gson.toJson(newMessageToIA);
         
@@ -79,18 +76,15 @@ public class ImageRequester extends Thread{
             String message = gson.toJson(imageAnalyzed);
             bus.post(Configuration.image_analyzed_topic, message);
             
-            writer.close();
-            CDR.storeFile(logFilename, logFilename);
-            
         } catch (IOException | InterruptedException | ExecutionException | TimeoutException ex) {
-            Logger.getLogger(ImageRequester.class.getName()).log(Level.SEVERE, null, ex);
+            log(ex.toString());
         }finally{
             try{
                 din.close();
                 dout.close();
                 soc.close();
             }catch(IOException e){
-                System.out.println("Error: " + e);
+                log("Error: " + e);
             }
         }
     }
@@ -101,10 +95,10 @@ public class ImageRequester extends Thread{
             byte[] bytes = msg.getBytes(StandardCharsets.UTF_8);
             dout.write(bytes);
             dout.flush();
-            writer.write("client> " + msg + "\n");
+            log("client> " + msg + "\n");
         }
         catch(IOException e){
-            System.out.println("Error: " + e);
+            log("Error: " + e);
         }
     }
     
@@ -116,11 +110,24 @@ public class ImageRequester extends Thread{
             din.read(b);
             response = new String(b, StandardCharsets.UTF_8);
             response = response.replaceAll("\u0000.*", "");
-            writer.write("server> " + response + "\n"); 
+            log("server> " + response + "\n"); 
         } catch (IOException ex) {
-            Logger.getLogger(ImageRequester.class.getName()).log(Level.SEVERE, null, ex);
+            log(ex.toString());
         }
         return response;
     }
     
+    private void log(String info){
+        try {
+            writer = new BufferedWriter(new FileWriter(logFilename));
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+        try {
+            writer.close();
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+        CDR.storeFile(logFilename, logFilename);
+    }
 }
