@@ -26,6 +26,7 @@ import json.IncidentReport;
 import json.MessageFromIA;
 import json.MessageToIA;
 import mykafka.Bus;
+import utils.CDR;
 
 public class ImageRequester extends Thread{
     Socket soc;
@@ -36,6 +37,8 @@ public class ImageRequester extends Thread{
     IncidentReport incidentReport;
     Attachment attachment;
     Bus bus = new Bus();
+    String logFilename = "media-hub-image-log.txt";
+    BufferedWriter writer;
     
     public ImageRequester(IncidentReport incidentReport, Attachment attachment){
         this.incidentReport = incidentReport;
@@ -45,6 +48,11 @@ public class ImageRequester extends Thread{
     @Override
     public void run()
     {
+        try {
+            writer = new BufferedWriter(new FileWriter(logFilename));
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
         MessageToIA newMessageToIA = new MessageToIA(attachment.getAttachmentURL());
         String request = gson.toJson(newMessageToIA);
         
@@ -71,6 +79,9 @@ public class ImageRequester extends Thread{
             String message = gson.toJson(imageAnalyzed);
             bus.post(Configuration.image_analyzed_topic, message);
             
+            writer.close();
+            CDR.storeFile(logFilename, logFilename);
+            
         } catch (IOException | InterruptedException | ExecutionException | TimeoutException ex) {
             Logger.getLogger(ImageRequester.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
@@ -90,7 +101,7 @@ public class ImageRequester extends Thread{
             byte[] bytes = msg.getBytes(StandardCharsets.UTF_8);
             dout.write(bytes);
             dout.flush();
-            System.out.println("client> " + msg);
+            writer.write("client> " + msg + "\n");
         }
         catch(IOException e){
             System.out.println("Error: " + e);
@@ -105,7 +116,7 @@ public class ImageRequester extends Thread{
             din.read(b);
             response = new String(b, StandardCharsets.UTF_8);
             response = response.replaceAll("\u0000.*", "");
-            System.out.println("server> " + response); 
+            writer.write("server> " + response + "\n"); 
         } catch (IOException ex) {
             Logger.getLogger(ImageRequester.class.getName()).log(Level.SEVERE, null, ex);
         }
