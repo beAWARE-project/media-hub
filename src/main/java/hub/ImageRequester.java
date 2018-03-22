@@ -118,6 +118,7 @@ public class ImageRequester extends Thread{
     }
     
     private void log(String info){
+        
         try {
             writer = new BufferedWriter(new FileWriter(logFilename));
             writer.write(info);
@@ -126,5 +127,6 @@ public class ImageRequester extends Thread{
             System.out.println(ex);
         }
         CDR.storeFile(logFilename, logFilename);
+        
     }
 }
