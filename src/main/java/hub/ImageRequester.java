@@ -120,10 +120,7 @@ public class ImageRequester extends Thread{
     private void log(String info){
         try {
             writer = new BufferedWriter(new FileWriter(logFilename));
-        } catch (IOException ex) {
-            System.out.println(ex);
-        }
-        try {
+            writer.write(info);
             writer.close();
         } catch (IOException ex) {
             System.out.println(ex);
