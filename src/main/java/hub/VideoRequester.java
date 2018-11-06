@@ -46,7 +46,7 @@ public class VideoRequester extends Thread{
     @Override
     public void run()
     {
-        MessageToVA newMessageToVA = new MessageToVA(attachment.getAttachmentTimeStampUTC(), attachment.getAttachmentURL());
+        MessageToVA newMessageToVA = new MessageToVA(attachment.getAttachmentURL(), incidentReport.getBody().getIncidentType(), attachment.getAttachmentTimeStampUTC());
         String request = gson.toJson(newMessageToVA);
         
         try{      

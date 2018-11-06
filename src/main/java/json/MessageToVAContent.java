@@ -14,16 +14,18 @@ import java.util.List;
  */
 public class MessageToVAContent {
     
-    String startTimeUTC;
     String URL;
+    String incidentType;
+    String attachmentTimeStampUTC;
     
     public MessageToVAContent(){
         
     }
     
-    public MessageToVAContent(String startTimeUTC, String URL){
-        this.startTimeUTC = startTimeUTC;
+    public MessageToVAContent(String URL, String incidentType, String attachmentTimeStampUTC){
         this.URL = URL;
+        this.incidentType = incidentType;
+        this.attachmentTimeStampUTC = attachmentTimeStampUTC;
     }
     
 }

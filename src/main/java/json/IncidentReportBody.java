@@ -73,4 +73,8 @@ public class IncidentReportBody {
         return description;
     }
     
+    public String getIncidentType(){
+        return incidentType;
+    }
+    
 }

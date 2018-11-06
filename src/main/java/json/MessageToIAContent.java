@@ -15,13 +15,17 @@ import java.util.List;
 public class MessageToIAContent {
     
     String URL;
+    String incidentType;
+    String attachmentTimeStampUTC;
     
     public MessageToIAContent(){
         
     }
     
-    public MessageToIAContent(String URL){
+    public MessageToIAContent(String URL, String incidentType, String attachmentTimeStampUTC){
         this.URL = URL;
+        this.incidentType = incidentType;
+        this.attachmentTimeStampUTC = attachmentTimeStampUTC;
     }
     
 }

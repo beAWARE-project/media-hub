@@ -17,8 +17,8 @@ public class MessageToIA {
         
     }
     
-    public MessageToIA(String URL){
-        this.message = new MessageToIAContent(URL);
+    public MessageToIA(String URL, String incidentType, String attachmentTimeStampUTC){
+        this.message = new MessageToIAContent(URL, incidentType, attachmentTimeStampUTC);
     }
     
 }

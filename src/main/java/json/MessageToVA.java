@@ -17,8 +17,8 @@ public class MessageToVA {
         
     }
     
-    public MessageToVA(String startTimeUTC, String URL){
-        this.message = new MessageToVAContent(startTimeUTC, URL);
+    public MessageToVA(String URL, String incidentType, String attachmentTimeStampUTC){
+        this.message = new MessageToVAContent(URL, incidentType, attachmentTimeStampUTC);
     }
     
 }

@@ -50,7 +50,7 @@ public class ImageRequester extends Thread{
     {
         log("ImageRequester started\n");
         log(attachment.getAttachmentURL() + "\n");
-        MessageToIA newMessageToIA = new MessageToIA(attachment.getAttachmentURL());
+        MessageToIA newMessageToIA = new MessageToIA(attachment.getAttachmentURL(), incidentReport.getBody().getIncidentType(), attachment.getAttachmentTimeStampUTC());
         String request = gson.toJson(newMessageToIA);
         
         try{      
