@@ -15,17 +15,17 @@ public class Attachment {
     String attachmentType;
     String attachmentTimeStampUTC;
     String attachmentURL;
+    String attachmentFormat;
+    int attachmentWidth;
+    int attachmentHeight;
+    int attachmentFrameRateFPS;
     
     public Attachment(){
         
     }
     
-    public Attachment(String attachmentName, String attachmentType,
-                        String attachmentTimeStampUTC, String attachmentURL){
-        this.attachmentName = attachmentName;
-        this.attachmentType = attachmentType;
-        this.attachmentTimeStampUTC = attachmentTimeStampUTC;
-        this.attachmentURL = attachmentURL;
+    public String getAttachmentName(){
+        return attachmentName;
     }
     
     public String getAttachmentType(){
@@ -38,6 +38,22 @@ public class Attachment {
     
     public String getAttachmentURL(){
         return attachmentURL;
+    }
+    
+    public String getAttachmentFormat(){
+        return attachmentType;
+    }
+    
+    public int getAttachmentWidth(){
+        return attachmentWidth;
+    }
+    
+    public int getAttachmentHeight(){
+        return attachmentHeight;
+    }
+    
+    public int getAttachmentFrameRateFPS(){
+        return attachmentFrameRateFPS;
     }
     
 }

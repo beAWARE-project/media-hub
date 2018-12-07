@@ -9,16 +9,16 @@ package json;
  *
  * @author andreadisst
  */
-public class AudioAnalyzed {
+public class TOP010AudioAnalyzed {
     
     Header header;
-    AudioAnalyzedBody body;
+    TOP010AudioAnalyzedBody body;
     
-    public AudioAnalyzed(){
+    public TOP010AudioAnalyzed(){
         
     }
     
-    public AudioAnalyzed(Header header, AudioAnalyzedBody body){
+    public TOP010AudioAnalyzed(Header header, TOP010AudioAnalyzedBody body){
         this.header = header;
         this.body = body;
     }

@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author andreadisst
  */
-public class AudioAnalyzedBody {
+public class TOP010AudioAnalyzedBody {
     
     String incidentOriginator;
     String incidentID;
@@ -28,11 +28,11 @@ public class AudioAnalyzedBody {
     String description;
     Position position;
     
-    public AudioAnalyzedBody(){
+    public TOP010AudioAnalyzedBody(){
         
     }
     
-    public AudioAnalyzedBody(String incidentOriginator, String incidentID, String language,
+    public TOP010AudioAnalyzedBody(String incidentOriginator, String incidentID, String language,
                     /*String incidentCategory, String incidentType, String priority, String severity,
                     String certainty, String expirationTimeUTC, String title,*/ String startTimeUTC, 
                     String description, Position position){

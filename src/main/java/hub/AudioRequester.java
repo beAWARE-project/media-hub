@@ -18,8 +18,8 @@ import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import json.Attachment;
-import json.AudioAnalyzed;
-import json.AudioAnalyzedBody;
+import json.TOP010AudioAnalyzed;
+import json.TOP010AudioAnalyzedBody;
 import json.Header;
 import json.IncidentReport;
 import json.MessageFromASR;
@@ -82,10 +82,10 @@ public class AudioRequester extends Thread{
 
                     Header header = incidentReport.getHeader();
                     String date = new java.text.SimpleDateFormat("yyyy-MM-d'T'HH:mm:ss'Z'").format(new java.util.Date(System.currentTimeMillis()));
-                    AudioAnalyzedBody audioAnalyzedBody = new AudioAnalyzedBody(header.getSender(), incidentReport.getBody().getIncidentID(), messageFromASR.getLanguage(), date, messageFromASR.getTranscription(), incidentReport.getBody().getPosition());
+                    TOP010AudioAnalyzedBody audioAnalyzedBody = new TOP010AudioAnalyzedBody(header.getSender(), incidentReport.getBody().getIncidentID(), messageFromASR.getLanguage(), date, messageFromASR.getTranscription(), incidentReport.getBody().getPosition());
                     header.setTopicName(Configuration.audio_analyzed_topic);
                     header.setSender("ASR");
-                    AudioAnalyzed audioAnalyzed = new AudioAnalyzed(header, audioAnalyzedBody);
+                    TOP010AudioAnalyzed audioAnalyzed = new TOP010AudioAnalyzed(header, audioAnalyzedBody);
                     String topic_message = gson.toJson(audioAnalyzed);
                     bus.post(Configuration.audio_analyzed_topic, topic_message);
                     

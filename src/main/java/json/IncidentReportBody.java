@@ -26,31 +26,12 @@ public class IncidentReportBody {
     String expirationTimeUTC;
     String title;
     String description;
+    List<String> analysisTasks;
     Position position;
     List<Attachment> attachments = new ArrayList<>();
     
     public IncidentReportBody(){
         
-    }
-    
-    public IncidentReportBody(String incidentOriginator, String incidentID, String language,
-                    String incidentCategory, String incidentType, String priority, String severity,
-                    String certainty, String startTimeUTC, String expirationTimeUTC,
-                    String title, String description, Position position, List<Attachment> attachments){
-        this.incidentOriginator = incidentOriginator;
-        this.incidentID = incidentID;
-        this.language = language;
-        this.incidentCategory = incidentCategory;
-        this.incidentType = incidentType;
-        this.priority = priority;
-        this.severity = severity;
-        this.certainty = certainty;
-        this.startTimeUTC = startTimeUTC;
-        this.expirationTimeUTC = expirationTimeUTC;
-        this.title = title;
-        this.description = description;
-        this.position = position;
-        this.attachments = attachments;
     }
     
     public List<Attachment> getAttachments(){
@@ -75,6 +56,10 @@ public class IncidentReportBody {
     
     public String getIncidentType(){
         return incidentType;
+    }
+    
+    public List<String> getAnalysisTasks(){
+        return analysisTasks;
     }
     
 }

@@ -9,21 +9,18 @@ package json;
  *
  * @author andreadisst
  */
-public class IncidentReport {
+public class TOP017VideoAnalyzed {
     
     Header header;
-    IncidentReportBody body;
+    TOP017VideoAnalyzedBody body;
     
-    public IncidentReport(){
+    public TOP017VideoAnalyzed(){
         
     }
     
-    public IncidentReportBody getBody(){
-        return body;
-    }
-    
-    public Header getHeader(){
-        return header;
+    public TOP017VideoAnalyzed(Header header, TOP017VideoAnalyzedBody body){
+        this.header = header;
+        this.body = body;
     }
     
 }

@@ -14,31 +14,29 @@ import com.google.gson.GsonBuilder;
 import java.io.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
-import java.time.Instant;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import json.Attachment;
 import json.Header;
+import json.TOP019UAVMediaAnalyzed;
+import json.TOP019UAVMediaAnalyzedBody;
 import json.IncidentReport;
-import json.MessageFromVA;
-import json.MessageToVA;
-import json.TOP017VideoAnalyzed;
-import json.TOP017VideoAnalyzedBody;
+import json.MessageFromDA;
+import json.MessageToDA;
 import mykafka.Bus;
 
-public class VideoRequester extends Thread{
+public class DronesRequester extends Thread{
     Socket soc;
     DataInputStream din;
     DataOutputStream dout;
     Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-    String over = "Msg from VA received";
+    String over = "Msg from DA received";
     IncidentReport incidentReport;
     Attachment attachment;
     Bus bus = new Bus();
+    BufferedWriter writer;
     
-    public VideoRequester(IncidentReport incidentReport, Attachment attachment){
+    public DronesRequester(IncidentReport incidentReport, Attachment attachment){
         this.incidentReport = incidentReport;
         this.attachment = attachment;
     }
@@ -46,12 +44,16 @@ public class VideoRequester extends Thread{
     @Override
     public void run()
     {
-        MessageToVA newMessageToVA = new MessageToVA(attachment.getAttachmentURL(), incidentReport.getBody().getIncidentType(), attachment.getAttachmentTimeStampUTC());
-        String request = gson.toJson(newMessageToVA);
-        
+        System.out.println("really IN");
+        MessageToDA newMessageToDA = new MessageToDA(incidentReport.getBody().getAnalysisTasks(), incidentReport.getBody().getPosition().getLatitude(), incidentReport.getBody().getPosition().getLongitude(),
+                incidentReport.getBody().getPosition().getAltitude(), incidentReport.getBody().getPosition().getHeading(), incidentReport.getBody().getPosition().getGimbalPitch(),
+                incidentReport.getBody().getPosition().getSpeed(), attachment.getAttachmentName(), attachment.getAttachmentType(), attachment.getAttachmentFormat(),
+                attachment.getAttachmentWidth(), attachment.getAttachmentHeight(), attachment.getAttachmentFrameRateFPS(), attachment.getAttachmentURL(), attachment.getAttachmentTimeStampUTC());
+        String request = gson.toJson(newMessageToDA);
+        System.out.println(request);
         try{      
             
-            soc = new Socket(Configuration.video_IP, Configuration.video_port);  
+            soc = new Socket(Configuration.drones_IP, Configuration.drones_port);  
             
             din = new DataInputStream(soc.getInputStream());
             dout = new DataOutputStream(soc.getOutputStream());
@@ -61,26 +63,27 @@ public class VideoRequester extends Thread{
             readMessage();
 
             String response = readMessage();
-            MessageFromVA messageFromVA = gson.fromJson(response, MessageFromVA.class);
-            
+            MessageFromDA messageFromDA = gson.fromJson(response, MessageFromDA.class);
+            System.out.println("response");
             sendMessage(over);
             
-            TOP017VideoAnalyzedBody videoAnalyzedBody = new TOP017VideoAnalyzedBody(attachment.getAttachmentTimeStampUTC() , incidentReport.getBody().getPosition(), incidentReport.getBody().getIncidentID(), attachment.getAttachmentURL(), messageFromVA.getVidAnalyzed(), messageFromVA.getVidAnalysis());
+            TOP019UAVMediaAnalyzedBody mediaAnalyzedBody = new TOP019UAVMediaAnalyzedBody(attachment.getAttachmentTimeStampUTC() , incidentReport.getBody().getPosition(), incidentReport.getBody().getIncidentID(), attachment.getAttachmentURL(), messageFromDA.getMediaAnalyzed(), messageFromDA.getMediaAnalysis());
             Header header = incidentReport.getHeader();
-            header.setTopicName(Configuration.video_analyzed_topic);
-            TOP017VideoAnalyzed videoAnalyzed = new TOP017VideoAnalyzed(header, videoAnalyzedBody);
-            String message = gson.toJson(videoAnalyzed);
-            bus.post(Configuration.video_analyzed_topic, message);
+            header.setTopicName(Configuration.media_analyzed_topic);
+            TOP019UAVMediaAnalyzed mediaAnalyzed = new TOP019UAVMediaAnalyzed(header, mediaAnalyzedBody);
+            String message = gson.toJson(mediaAnalyzed);
+            System.out.println(message);
+            bus.post(Configuration.media_analyzed_topic, message);
             
         } catch (IOException | InterruptedException | ExecutionException | TimeoutException ex) {
-            Logger.getLogger(VideoRequester.class.getName()).log(Level.SEVERE, null, ex);
+            
         }finally{
             try{
                 din.close();
                 dout.close();
                 soc.close();
             }catch(IOException e){
-                System.out.println("Error: " + e);
+                
             }
         }
     }
@@ -91,10 +94,8 @@ public class VideoRequester extends Thread{
             byte[] bytes = msg.getBytes(StandardCharsets.UTF_8);
             dout.write(bytes);
             dout.flush();
-            System.out.println("client> " + msg);
         }
         catch(IOException e){
-            System.out.println("Error: " + e);
         }
     }
     
@@ -106,9 +107,7 @@ public class VideoRequester extends Thread{
             din.read(b);
             response = new String(b, StandardCharsets.UTF_8);
             response = response.replaceAll("\u0000.*", "");
-            System.out.println("server> " + response); 
         } catch (IOException ex) {
-            Logger.getLogger(VideoRequester.class.getName()).log(Level.SEVERE, null, ex);
         }
         return response;
     }

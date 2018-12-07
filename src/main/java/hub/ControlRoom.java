@@ -29,13 +29,13 @@ import utils.CDR;
 public class ControlRoom {
     
     private static Gson gson = new Gson();
-    private static String logFilename = "media-hub-log.txt";
+    //private static String logFilename = "media-hub-log.txt";
     
     public static void main(String[] args)  {
         
         BusReader busReader = new BusReader();
         KafkaConsumer<String, String> kafkaConsumer = busReader.getKafkaConsumer();
-        kafkaConsumer.subscribe(Arrays.asList(Configuration.incident_report_topic));
+        kafkaConsumer.subscribe(Arrays.asList(Configuration.incident_report_topic,Configuration.uavp_message_topic));
         
         try {
             while (true) {
@@ -44,49 +44,56 @@ public class ControlRoom {
                 {
                     String message = record.value();
                     
-                    BufferedWriter writer = new BufferedWriter(new FileWriter(logFilename));
-                    writer.write("Message consumed: " + message + "\n");
-                    //System.out.println("Message consumed: " + message);
+                    //BufferedWriter writer = new BufferedWriter(new FileWriter(logFilename));
+                    //writer.write("Message consumed: " + message + "\n");
+                    System.out.println("Message consumed: " + message);
                     
                     Type type = new TypeToken<IncidentReport>() {}.getType();
                     
                     try{
                         IncidentReport incidentReport = gson.fromJson(message, type);
-
-                        if( incidentReport.getHeader().getSender().equals("FRAPP") || incidentReport.getHeader().getSender().equals("SCAPP") ){
-                            writer.write("Sender is APP\n");
-                            for(Attachment attachment : incidentReport.getBody().getAttachments()){
-                                writer.write("Has attachment\n");
-                                switch(attachment.getAttachmentType()){
-                                    case "image":
-                                        writer.write("Attachment is an image\n");
-                                        ImageRequester imageRequester = new ImageRequester(incidentReport, attachment);
-                                        imageRequester.start();
-                                        break;
-                                    case "video":
-                                        VideoRequester videoRequester = new VideoRequester(incidentReport, attachment);
-                                        videoRequester.start();
-                                        break;
-                                    case "audio":
-                                        AudioRequester audioRequester = new AudioRequester(incidentReport, attachment);
-                                        audioRequester.start();
-                                        break;
+                        
+                        if( incidentReport.getHeader().getTopicName().equals(Configuration.incident_report_topic) ){
+                            if( incidentReport.getHeader().getSender().equals("FRAPP") || incidentReport.getHeader().getSender().equals("SCAPP") ){
+                                //writer.write("Sender is APP\n");
+                                for(Attachment attachment : incidentReport.getBody().getAttachments()){
+                                    //writer.write("Has attachment\n");
+                                    switch(attachment.getAttachmentType()){
+                                        case "image":
+                                            //writer.write("Attachment is an image\n");
+                                            ImageRequester imageRequester = new ImageRequester(incidentReport, attachment);
+                                            imageRequester.start();
+                                            break;
+                                        case "video":
+                                            VideoRequester videoRequester = new VideoRequester(incidentReport, attachment);
+                                            videoRequester.start();
+                                            break;
+                                        case "audio":
+                                            AudioRequester audioRequester = new AudioRequester(incidentReport, attachment);
+                                            audioRequester.start();
+                                            break;
+                                    }
                                 }
                             }
-                            
+                        }else if( incidentReport.getHeader().getTopicName().equals(Configuration.uavp_message_topic) ){
+                            for(Attachment attachment : incidentReport.getBody().getAttachments()){
+                                DronesRequester dronesRequester = new DronesRequester(incidentReport, attachment);
+                                dronesRequester.start();
+                            }
                         }
                         
-                        writer.close();
-                        CDR.storeFile(logFilename, logFilename);
+                        //writer.close();
+                        //CDR.storeFile(logFilename, logFilename);
                         
                     }catch(JsonSyntaxException e){
                         System.out.println(e);
                     }
                 }
             }
-        } catch (IOException ex) {
+        }/* catch (IOException ex) {
+            System.out.println(ex);/* catch (IOException ex) {
             System.out.println(ex);
-        } finally {
+        }*/ finally {
           kafkaConsumer.close(); 
         }
 

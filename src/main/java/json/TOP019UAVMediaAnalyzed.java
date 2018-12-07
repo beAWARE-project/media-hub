@@ -9,16 +9,16 @@ package json;
  *
  * @author andreadisst
  */
-public class ImageAnalyzed {
+public class TOP019UAVMediaAnalyzed {
     
     Header header;
-    ImageAnalyzedBody body;
+    TOP019UAVMediaAnalyzedBody body;
     
-    public ImageAnalyzed(){
+    public TOP019UAVMediaAnalyzed(){
         
     }
     
-    public ImageAnalyzed(Header header, ImageAnalyzedBody body){
+    public TOP019UAVMediaAnalyzed(Header header, TOP019UAVMediaAnalyzedBody body){
         this.header = header;
         this.body = body;
     }

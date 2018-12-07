@@ -16,17 +16,15 @@ import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import json.Attachment;
 import json.Header;
-import json.ImageAnalyzed;
-import json.ImageAnalyzedBody;
+import json.TOP018ImageAnalyzed;
+import json.TOP018ImageAnalyzedBody;
 import json.IncidentReport;
 import json.MessageFromIA;
 import json.MessageToIA;
 import mykafka.Bus;
-import utils.CDR;
+//import utils.CDR;
 
 public class ImageRequester extends Thread{
     Socket soc;
@@ -37,7 +35,7 @@ public class ImageRequester extends Thread{
     IncidentReport incidentReport;
     Attachment attachment;
     Bus bus = new Bus();
-    String logFilename = "media-hub-image-log.txt";
+    //String logFilename = "media-hub-image-log.txt";
     BufferedWriter writer;
     
     public ImageRequester(IncidentReport incidentReport, Attachment attachment){
@@ -48,8 +46,8 @@ public class ImageRequester extends Thread{
     @Override
     public void run()
     {
-        log("ImageRequester started\n");
-        log(attachment.getAttachmentURL() + "\n");
+        //log("ImageRequester started\n");
+        //log(attachment.getAttachmentURL() + "\n");
         MessageToIA newMessageToIA = new MessageToIA(attachment.getAttachmentURL(), incidentReport.getBody().getIncidentType(), attachment.getAttachmentTimeStampUTC());
         String request = gson.toJson(newMessageToIA);
         
@@ -69,22 +67,22 @@ public class ImageRequester extends Thread{
             
             sendMessage(over);
             
-            ImageAnalyzedBody imageAnalyzedBody = new ImageAnalyzedBody(attachment.getAttachmentTimeStampUTC() , incidentReport.getBody().getPosition(), incidentReport.getBody().getIncidentID(), attachment.getAttachmentURL(), messageFromIA.getImgAnalyzed(), messageFromIA.getImgAnalysis());
+            TOP018ImageAnalyzedBody imageAnalyzedBody = new TOP018ImageAnalyzedBody(attachment.getAttachmentTimeStampUTC() , incidentReport.getBody().getPosition(), incidentReport.getBody().getIncidentID(), attachment.getAttachmentURL(), messageFromIA.getImgAnalyzed(), messageFromIA.getImgAnalysis());
             Header header = incidentReport.getHeader();
             header.setTopicName(Configuration.image_analyzed_topic);
-            ImageAnalyzed imageAnalyzed = new ImageAnalyzed(header, imageAnalyzedBody);
+            TOP018ImageAnalyzed imageAnalyzed = new TOP018ImageAnalyzed(header, imageAnalyzedBody);
             String message = gson.toJson(imageAnalyzed);
             bus.post(Configuration.image_analyzed_topic, message);
             
         } catch (IOException | InterruptedException | ExecutionException | TimeoutException ex) {
-            log(ex.toString());
+            //log(ex.toString());
         }finally{
             try{
                 din.close();
                 dout.close();
                 soc.close();
             }catch(IOException e){
-                log("Error: " + e);
+                //log("Error: " + e);
             }
         }
     }
@@ -95,10 +93,10 @@ public class ImageRequester extends Thread{
             byte[] bytes = msg.getBytes(StandardCharsets.UTF_8);
             dout.write(bytes);
             dout.flush();
-            log("client> " + msg + "\n");
+            //log("client> " + msg + "\n");
         }
         catch(IOException e){
-            log("Error: " + e);
+            //log("Error: " + e);
         }
     }
     
@@ -110,14 +108,14 @@ public class ImageRequester extends Thread{
             din.read(b);
             response = new String(b, StandardCharsets.UTF_8);
             response = response.replaceAll("\u0000.*", "");
-            log("server> " + response + "\n"); 
+            //log("server> " + response + "\n"); 
         } catch (IOException ex) {
-            log(ex.toString());
+            //log(ex.toString());
         }
         return response;
     }
     
-    private void log(String info){
+    /*private void log(String info){
         
         try {
             writer = new BufferedWriter(new FileWriter(logFilename));
@@ -128,5 +126,5 @@ public class ImageRequester extends Thread{
         }
         CDR.storeFile(logFilename, logFilename);
         
-    }
+    }*/
 }

@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author andreadisst
  */
-public class VideoAnalyzedBody {
+public class TOP017VideoAnalyzedBody {
     
     String media_timestamp;
     Position location;
@@ -21,11 +21,11 @@ public class VideoAnalyzedBody {
     String vid_analyzed;
     String vid_analysis;
     
-    public VideoAnalyzedBody(){
+    public TOP017VideoAnalyzedBody(){
         
     }
     
-    public VideoAnalyzedBody(String media_timestamp, Position location, String incidentID,
+    public TOP017VideoAnalyzedBody(String media_timestamp, Position location, String incidentID,
                                 String vid_original, String vid_analyzed, String vid_analysis){
         this.media_timestamp = media_timestamp;
         this.location = location;
