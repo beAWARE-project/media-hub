@@ -22,6 +22,11 @@ public class Position {
         
     }
     
+    public Position(float latitude, float longitude){
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+    
     public float getLatitude(){
         return latitude;
     }

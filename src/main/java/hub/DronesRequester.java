@@ -23,6 +23,7 @@ import json.TOP019UAVMediaAnalyzedBody;
 import json.IncidentReport;
 import json.MessageFromDA;
 import json.MessageToDA;
+import json.Position;
 import mykafka.Bus;
 
 public class DronesRequester extends Thread{
@@ -44,13 +45,12 @@ public class DronesRequester extends Thread{
     @Override
     public void run()
     {
-        System.out.println("really IN");
         MessageToDA newMessageToDA = new MessageToDA(incidentReport.getBody().getAnalysisTasks(), incidentReport.getBody().getPosition().getLatitude(), incidentReport.getBody().getPosition().getLongitude(),
                 incidentReport.getBody().getPosition().getAltitude(), incidentReport.getBody().getPosition().getHeading(), incidentReport.getBody().getPosition().getGimbalPitch(),
                 incidentReport.getBody().getPosition().getSpeed(), attachment.getAttachmentName(), attachment.getAttachmentType(), attachment.getAttachmentFormat(),
                 attachment.getAttachmentWidth(), attachment.getAttachmentHeight(), attachment.getAttachmentFrameRateFPS(), attachment.getAttachmentURL(), attachment.getAttachmentTimeStampUTC());
         String request = gson.toJson(newMessageToDA);
-        System.out.println(request);
+        
         try{      
             
             soc = new Socket(Configuration.drones_IP, Configuration.drones_port);  
@@ -64,15 +64,13 @@ public class DronesRequester extends Thread{
 
             String response = readMessage();
             MessageFromDA messageFromDA = gson.fromJson(response, MessageFromDA.class);
-            System.out.println("response");
             sendMessage(over);
             
-            TOP019UAVMediaAnalyzedBody mediaAnalyzedBody = new TOP019UAVMediaAnalyzedBody(attachment.getAttachmentTimeStampUTC() , incidentReport.getBody().getPosition(), incidentReport.getBody().getIncidentID(), attachment.getAttachmentURL(), messageFromDA.getMediaAnalyzed(), messageFromDA.getMediaAnalysis());
+            TOP019UAVMediaAnalyzedBody mediaAnalyzedBody = new TOP019UAVMediaAnalyzedBody(attachment.getAttachmentTimeStampUTC() , new Position(incidentReport.getBody().getPosition().getLatitude(),incidentReport.getBody().getPosition().getLongitude()), incidentReport.getBody().getIncidentID(), attachment.getAttachmentURL(), messageFromDA.getMediaAnalyzed(), messageFromDA.getMediaAnalysis());
             Header header = incidentReport.getHeader();
             header.setTopicName(Configuration.media_analyzed_topic);
             TOP019UAVMediaAnalyzed mediaAnalyzed = new TOP019UAVMediaAnalyzed(header, mediaAnalyzedBody);
             String message = gson.toJson(mediaAnalyzed);
-            System.out.println(message);
             bus.post(Configuration.media_analyzed_topic, message);
             
         } catch (IOException | InterruptedException | ExecutionException | TimeoutException ex) {

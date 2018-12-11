@@ -12,9 +12,9 @@ package hub;
 public class Configuration {
     
     public static String video_IP = "160.40.49.112";//"video-analysis";
-    public static int video_port = 7777;
+    public static int video_port = 7778;
     
-    public static String image_IP = "160.40.49.111";//"image-analysis";
+    public static String image_IP = "160.40.49.112";//"image-analysis";
     public static int image_port = 7777;//9999
     
     public static String audio_IP = "asr";//"160.40.49.114";
