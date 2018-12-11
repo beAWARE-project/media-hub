@@ -23,6 +23,7 @@ import json.TOP018ImageAnalyzedBody;
 import json.IncidentReport;
 import json.MessageFromIA;
 import json.MessageToIA;
+import json.SimplePosition;
 import mykafka.Bus;
 //import utils.CDR;
 
@@ -67,7 +68,7 @@ public class ImageRequester extends Thread{
             
             sendMessage(over);
             
-            TOP018ImageAnalyzedBody imageAnalyzedBody = new TOP018ImageAnalyzedBody(attachment.getAttachmentTimeStampUTC() , incidentReport.getBody().getPosition(), incidentReport.getBody().getIncidentID(), attachment.getAttachmentURL(), messageFromIA.getImgAnalyzed(), messageFromIA.getImgAnalysis());
+            TOP018ImageAnalyzedBody imageAnalyzedBody = new TOP018ImageAnalyzedBody(attachment.getAttachmentTimeStampUTC() , new SimplePosition(incidentReport.getBody().getPosition().getLatitude(),incidentReport.getBody().getPosition().getLongitude()), incidentReport.getBody().getIncidentID(), attachment.getAttachmentURL(), messageFromIA.getImgAnalyzed(), messageFromIA.getImgAnalysis());
             Header header = incidentReport.getHeader();
             header.setTopicName(Configuration.image_analyzed_topic);
             TOP018ImageAnalyzed imageAnalyzed = new TOP018ImageAnalyzed(header, imageAnalyzedBody);

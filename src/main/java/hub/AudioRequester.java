@@ -24,6 +24,7 @@ import json.Header;
 import json.IncidentReport;
 import json.MessageFromASR;
 import json.MessageToASR;
+import json.SimplePosition;
 import mykafka.Bus;
 
 public class AudioRequester extends Thread{
@@ -82,7 +83,7 @@ public class AudioRequester extends Thread{
 
                     Header header = incidentReport.getHeader();
                     String date = new java.text.SimpleDateFormat("yyyy-MM-d'T'HH:mm:ss'Z'").format(new java.util.Date(System.currentTimeMillis()));
-                    TOP010AudioAnalyzedBody audioAnalyzedBody = new TOP010AudioAnalyzedBody(header.getSender(), incidentReport.getBody().getIncidentID(), messageFromASR.getLanguage(), date, messageFromASR.getTranscription(), incidentReport.getBody().getPosition());
+                    TOP010AudioAnalyzedBody audioAnalyzedBody = new TOP010AudioAnalyzedBody(header.getSender(), incidentReport.getBody().getIncidentID(), messageFromASR.getLanguage(), date, messageFromASR.getTranscription(), new SimplePosition(incidentReport.getBody().getPosition().getLatitude(),incidentReport.getBody().getPosition().getLongitude()));
                     header.setTopicName(Configuration.audio_analyzed_topic);
                     header.setSender("ASR");
                     TOP010AudioAnalyzed audioAnalyzed = new TOP010AudioAnalyzed(header, audioAnalyzedBody);

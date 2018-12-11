@@ -24,6 +24,7 @@ import json.IncidentReport;
 import json.MessageFromDA;
 import json.MessageToDA;
 import json.Position;
+import json.SimplePosition;
 import mykafka.Bus;
 
 public class DronesRequester extends Thread{
@@ -66,7 +67,7 @@ public class DronesRequester extends Thread{
             MessageFromDA messageFromDA = gson.fromJson(response, MessageFromDA.class);
             sendMessage(over);
             
-            TOP019UAVMediaAnalyzedBody mediaAnalyzedBody = new TOP019UAVMediaAnalyzedBody(attachment.getAttachmentTimeStampUTC() , new Position(incidentReport.getBody().getPosition().getLatitude(),incidentReport.getBody().getPosition().getLongitude()), incidentReport.getBody().getIncidentID(), attachment.getAttachmentURL(), messageFromDA.getMediaAnalyzed(), messageFromDA.getMediaAnalysis());
+            TOP019UAVMediaAnalyzedBody mediaAnalyzedBody = new TOP019UAVMediaAnalyzedBody(attachment.getAttachmentTimeStampUTC() , new SimplePosition(incidentReport.getBody().getPosition().getLatitude(),incidentReport.getBody().getPosition().getLongitude()), incidentReport.getBody().getIncidentID(), attachment.getAttachmentURL(), messageFromDA.getMediaAnalyzed(), messageFromDA.getMediaAnalysis());
             Header header = incidentReport.getHeader();
             header.setTopicName(Configuration.media_analyzed_topic);
             TOP019UAVMediaAnalyzed mediaAnalyzed = new TOP019UAVMediaAnalyzed(header, mediaAnalyzedBody);

@@ -12,7 +12,7 @@ package json;
 public class TOP018ImageAnalyzedBody {
     
     String media_timestamp;
-    Position location;
+    SimplePosition location;
     String incidentID;
     String im_original;
     String im_analyzed;
@@ -22,7 +22,7 @@ public class TOP018ImageAnalyzedBody {
         
     }
     
-    public TOP018ImageAnalyzedBody(String media_timestamp, Position location, String incidentID,
+    public TOP018ImageAnalyzedBody(String media_timestamp, SimplePosition location, String incidentID,
                                 String im_original, String im_analyzed, String im_analysis){
         this.media_timestamp = media_timestamp;
         this.location = location;

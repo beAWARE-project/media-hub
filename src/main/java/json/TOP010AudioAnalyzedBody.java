@@ -26,7 +26,7 @@ public class TOP010AudioAnalyzedBody {
     String title;*/
     String startTimeUTC;
     String description;
-    Position position;
+    SimplePosition position;
     
     public TOP010AudioAnalyzedBody(){
         
@@ -35,7 +35,7 @@ public class TOP010AudioAnalyzedBody {
     public TOP010AudioAnalyzedBody(String incidentOriginator, String incidentID, String language,
                     /*String incidentCategory, String incidentType, String priority, String severity,
                     String certainty, String expirationTimeUTC, String title,*/ String startTimeUTC, 
-                    String description, Position position){
+                    String description, SimplePosition position){
         this.incidentOriginator = incidentOriginator;
         this.incidentID = incidentID;
         this.language = language;

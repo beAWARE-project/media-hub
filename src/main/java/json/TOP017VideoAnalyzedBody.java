@@ -15,7 +15,7 @@ import java.util.List;
 public class TOP017VideoAnalyzedBody {
     
     String media_timestamp;
-    Position location;
+    SimplePosition location;
     String incidentID;
     String vid_original;
     String vid_analyzed;
@@ -25,7 +25,7 @@ public class TOP017VideoAnalyzedBody {
         
     }
     
-    public TOP017VideoAnalyzedBody(String media_timestamp, Position location, String incidentID,
+    public TOP017VideoAnalyzedBody(String media_timestamp, SimplePosition location, String incidentID,
                                 String vid_original, String vid_analyzed, String vid_analysis){
         this.media_timestamp = media_timestamp;
         this.location = location;
