@@ -11,6 +11,7 @@ package json;
  */
 public class TOP019UAVMediaAnalyzedBody {
     
+    boolean incident_detected;
     String media_timestamp;
     SimplePosition location;
     String incidentID;
@@ -22,8 +23,9 @@ public class TOP019UAVMediaAnalyzedBody {
         
     }
     
-    public TOP019UAVMediaAnalyzedBody(String media_timestamp, SimplePosition location, String incidentID,
+    public TOP019UAVMediaAnalyzedBody(boolean incident_detected, String media_timestamp, SimplePosition location, String incidentID,
                                 String media_original, String media_analyzed, String media_analysis){
+        this.incident_detected = incident_detected;
         this.media_timestamp = media_timestamp;
         this.location = location;
         this.incidentID = incidentID;

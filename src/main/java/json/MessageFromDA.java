@@ -17,8 +17,8 @@ public class MessageFromDA {
         
     }
     
-    public MessageFromDA(String media_analyzed, String media_analysis){
-        this.message = new MessageFromDAContent(media_analyzed, media_analysis);
+    public MessageFromDA(String media_analyzed, String media_analysis, boolean incident_detected){
+        this.message = new MessageFromDAContent(media_analyzed, media_analysis, incident_detected);
     }
     
     public String getMediaAnalyzed(){
@@ -27,6 +27,10 @@ public class MessageFromDA {
     
     public String getMediaAnalysis(){
         return message.getMediaAnalysis();
+    }
+    
+    public boolean getIncidentDetected(){
+        return message.getIncidentDetected();
     }
     
 }

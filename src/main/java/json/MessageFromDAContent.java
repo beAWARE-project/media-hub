@@ -13,14 +13,16 @@ public class MessageFromDAContent {
     
     String media_analyzed;
     String media_analysis;
+    boolean incident_detected;
     
     public MessageFromDAContent(){
         
     }
     
-    public MessageFromDAContent(String media_analyzed, String media_analysis){
+    public MessageFromDAContent(String media_analyzed, String media_analysis, boolean incident_detected){
         this.media_analyzed = media_analyzed;
         this.media_analysis = media_analysis;
+        this.incident_detected  = incident_detected;
     }
     
     public String getMediaAnalyzed(){
@@ -29,6 +31,10 @@ public class MessageFromDAContent {
     
     public String getMediaAnalysis(){
         return media_analysis;
+    }
+    
+    public boolean getIncidentDetected(){
+        return incident_detected;
     }
     
 }
