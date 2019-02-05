@@ -90,10 +90,8 @@ public class ControlRoom {
                     }
                 }
             }
-        }/* catch (IOException ex) {
-            System.out.println(ex);/* catch (IOException ex) {
-            System.out.println(ex);
-        }*/ finally {
+        } //catch (IOException ex) { System.out.println(ex); }
+        finally {
           kafkaConsumer.close(); 
         }
 

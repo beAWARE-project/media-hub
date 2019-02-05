@@ -67,12 +67,16 @@ public class DronesRequester extends Thread{
             MessageFromDA messageFromDA = gson.fromJson(response, MessageFromDA.class);
             sendMessage(over);
             
-            TOP019UAVMediaAnalyzedBody mediaAnalyzedBody = new TOP019UAVMediaAnalyzedBody(messageFromDA.getIncidentDetected(), attachment.getAttachmentTimeStampUTC() , new SimplePosition(incidentReport.getBody().getPosition().getLatitude(),incidentReport.getBody().getPosition().getLongitude()), incidentReport.getBody().getIncidentID(), attachment.getAttachmentURL(), messageFromDA.getMediaAnalyzed(), messageFromDA.getMediaAnalysis());
-            Header header = incidentReport.getHeader();
-            header.setTopicName(Configuration.media_analyzed_topic);
-            TOP019UAVMediaAnalyzed mediaAnalyzed = new TOP019UAVMediaAnalyzed(header, mediaAnalyzedBody);
-            String message = gson.toJson(mediaAnalyzed);
-            bus.post(Configuration.media_analyzed_topic, message);
+            if(messageFromDA.getMediaAnalyzed().equals("") && messageFromDA.getMediaAnalysis().equals("") && messageFromDA.getIncidentDetected()==false){
+                //do nothing
+            }else{
+                TOP019UAVMediaAnalyzedBody mediaAnalyzedBody = new TOP019UAVMediaAnalyzedBody(messageFromDA.getIncidentDetected(), attachment.getAttachmentTimeStampUTC() , new SimplePosition(incidentReport.getBody().getPosition().getLatitude(),incidentReport.getBody().getPosition().getLongitude()), incidentReport.getBody().getIncidentID(), /*attachment.getAttachmentURL(), */messageFromDA.getMediaAnalyzed(), messageFromDA.getMediaAnalysis());
+                Header header = incidentReport.getHeader();
+                header.setTopicName(Configuration.media_analyzed_topic);
+                TOP019UAVMediaAnalyzed mediaAnalyzed = new TOP019UAVMediaAnalyzed(header, mediaAnalyzedBody);
+                String message = gson.toJson(mediaAnalyzed);
+                bus.post(Configuration.media_analyzed_topic, message);
+            }
             
         } catch (IOException | InterruptedException | ExecutionException | TimeoutException ex) {
             
