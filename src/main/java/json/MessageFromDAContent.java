@@ -14,15 +14,19 @@ public class MessageFromDAContent {
     String media_analyzed;
     String media_analysis;
     boolean incident_detected;
+    float latitude;
+    float longitude;
     
     public MessageFromDAContent(){
         
     }
     
-    public MessageFromDAContent(String media_analyzed, String media_analysis, boolean incident_detected){
+    public MessageFromDAContent(String media_analyzed, String media_analysis, boolean incident_detected, float latitude, float longitude){
         this.media_analyzed = media_analyzed;
         this.media_analysis = media_analysis;
         this.incident_detected  = incident_detected;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
     
     public String getMediaAnalyzed(){
@@ -35,6 +39,14 @@ public class MessageFromDAContent {
     
     public boolean getIncidentDetected(){
         return incident_detected;
+    }
+    
+    public float getLatitude(){
+        return latitude;
+    }
+    
+    public float getLongitude(){
+        return longitude;
     }
     
 }
