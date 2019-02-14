@@ -20,7 +20,7 @@ public class Configuration {
     public static String audio_IP = "asr";
     public static int audio_port = 7766;
     
-    public static String drones_IP = "160.40.49.111";
+    public static String drones_IP = "160.40.49.114";
     public static int drones_port = 7777;
     
     public static String JAAS_CONFIG_PROPERTY = "java.security.auth.login.config";
