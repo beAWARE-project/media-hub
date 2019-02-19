@@ -54,7 +54,7 @@ public class ControlRoom {
                         IncidentReport incidentReport = gson.fromJson(message, type);
                         
                         if( incidentReport.getHeader().getTopicName().equals(Configuration.incident_report_topic) ){
-                            if( incidentReport.getHeader().getSender().equals("FRAPP") || incidentReport.getHeader().getSender().equals("SCAPP") ){
+                            if( incidentReport.getHeader().getSender().equals("FRAPP") || incidentReport.getHeader().getSender().equals("SCAPP") || incidentReport.getHeader().getSender().contains("CCTV") ){
                                 //writer.write("Sender is APP\n");
                                 for(Attachment attachment : incidentReport.getBody().getAttachments()){
                                     //writer.write("Has attachment\n");
