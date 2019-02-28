@@ -50,6 +50,7 @@ public class ControlRoom {
                     
                     Type type = new TypeToken<IncidentReport>() {}.getType();
                     
+                    
                     try{
                         IncidentReport incidentReport = gson.fromJson(message, type);
                         
