@@ -17,6 +17,7 @@ public class Configuration {
     public static String image_IP = "160.40.49.112";
     public static int image_port = 6666;
     
+    
     public static String audio_IP = "asr";
     public static int audio_port = 7766;
     
