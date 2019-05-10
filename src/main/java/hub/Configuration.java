@@ -11,16 +11,19 @@ package hub;
  */
 public class Configuration {
     
+    //video analysis
     public static String video_IP = "160.40.49.112";
     public static int video_port = 7778;
     
+    //image analysis
     public static String image_IP = "160.40.49.112";
     public static int image_port = 6666;
     
-    
+    //automatic speech recognition
     public static String audio_IP = "asr";
     public static int audio_port = 7766;
     
+    //drones analysis
     public static String drones_IP = "160.40.49.111";
     public static int drones_port = 7777;
     
