@@ -17,15 +17,15 @@ public class Configuration {
     
     //image analysis
     public static String image_IP = "160.40.49.112";
-    public static int image_port = 6666;
+    public static int image_port = 7777;
     
     //automatic speech recognition
     public static String audio_IP = "asr";
     public static int audio_port = 7766;
     
     //drones analysis
-    public static String drones_IP = "160.40.49.111";
-    public static int drones_port = 7777;
+    public static String drones_IP = "160.40.49.112";
+    public static int drones_port = 6666;
     
     public static String JAAS_CONFIG_PROPERTY = "java.security.auth.login.config";
     public static String key = "key";
