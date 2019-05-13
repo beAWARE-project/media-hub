@@ -4,7 +4,7 @@ node ('beaware-jenkins-slave') {
         sh 'git submodule init'
         sh 'git submodule update'
     }
-
+ 
     stage ('Compile (Maven)') {
         sh 'mvn clean package'
     }
