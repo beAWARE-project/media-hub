@@ -5,6 +5,8 @@
  */
 package json;
 
+import hub.Configuration;
+
 /**
  *
  * @author andreadisst
@@ -13,13 +15,13 @@ public class IncidentReport {
     
     Header header;
     IncidentReportBody body;
-    
+
     public IncidentReport(){
         
     }
-    
-    public IncidentReportBody getBody(){
-        return body;
+    public IncidentReportBody  getBody(){
+            return body;
+
     }
     
     public Header getHeader(){

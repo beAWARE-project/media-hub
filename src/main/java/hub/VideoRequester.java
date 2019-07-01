@@ -66,7 +66,7 @@ public class VideoRequester extends Thread{
             
             sendMessage(over);
             
-            TOP017VideoAnalyzedBody videoAnalyzedBody = new TOP017VideoAnalyzedBody(attachment.getAttachmentTimeStampUTC() , new SimplePosition(incidentReport.getBody().getPosition().getLatitude(),incidentReport.getBody().getPosition().getLongitude()), incidentReport.getBody().getIncidentID(), attachment.getAttachmentURL(), messageFromVA.getVidAnalyzed(), messageFromVA.getVidAnalysis());
+            TOP017VideoAnalyzedBody videoAnalyzedBody = new TOP017VideoAnalyzedBody(attachment.getAttachmentTimeStampUTC() , new SimplePosition(incidentReport.getBody().getPosition().getLatitude().get(0),incidentReport.getBody().getPosition().getLongitude().get(0)), incidentReport.getBody().getIncidentID(), attachment.getAttachmentURL(), messageFromVA.getVidAnalyzed(), messageFromVA.getVidAnalysis());
             Header header = incidentReport.getHeader();
             header.setTopicName(Configuration.video_analyzed_topic);
             TOP017VideoAnalyzed videoAnalyzed = new TOP017VideoAnalyzed(header, videoAnalyzedBody);

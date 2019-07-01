@@ -31,10 +31,10 @@ public class Configuration {
     public static String key = "key";
     
     public static String incident_report_topic = "TOP021_INCIDENT_REPORT";
-    public static String uavp_message_topic = "TOP031_UAVP_MESSAGE";
+    //public static String uavp_message_topic = "TOP031_UAVP_MESSAGE";
     public static String video_analyzed_topic = "TOP017_video_analyzed";
     public static String image_analyzed_topic = "TOP018_image_analyzed";
     public static String audio_analyzed_topic = "TOP010_AUDIO_ANALYZED";
     public static String media_analyzed_topic = "TOP019_UAV_media_analyzed";
-    
+    public static String uavp_message_topic = "TOP031_UAVP_MESSAGE";
 }

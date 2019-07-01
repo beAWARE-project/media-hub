@@ -15,11 +15,11 @@ import java.util.List;
 public class MessageToDAContent {
     
     List<String> analysisTasks;
-    double latitude;
-    double longitude;
-    double altitude;
-    int heading;
-    int gimbalPitch;
+    List<Float> latitude;
+    List<Float> longitude;
+    List<Float> altitude;
+    List<Integer> heading;
+    List<Integer> gimbalPitch;
     double speed;
     String attachmentName;
     String attachmentType;
@@ -34,7 +34,7 @@ public class MessageToDAContent {
         
     }
     
-    public MessageToDAContent(List<String> analysisTasks, double latitude, double longitude, double altitude, int heading, int gimbalPitch, double speed, String attachmentName,
+    public MessageToDAContent(List<String> analysisTasks,  List<Float> latitude, List<Float> longitude,  List<Float> altitude, List<Integer> heading, List<Integer> gimbalPitch, double speed, String attachmentName,
                               String attachmentType, String attachmentFormat, int attachmentWidth, int attachmentHeight, int attachmentFrameRateFPS, String attachmentURL,
                               String attachmentTimeStampUTC){
         this.analysisTasks = analysisTasks;

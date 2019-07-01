@@ -19,7 +19,7 @@ public class MessageToDA {
         
     }
     
-    public MessageToDA(List<String> analysisTasks, double latitude, double longitude, double altitude, int heading, int gimbalPitch, double speed, String attachmentName,
+    public MessageToDA(List<String> analysisTasks, List<Float>  latitude, List<Float>  longitude, List<Float>  altitude, List<Integer>  heading,List<Integer> gimbalPitch, double speed, String attachmentName,
                               String attachmentType, String attachmentFormat, int attachmentWidth, int attachmentHeight, int attachmentFrameRateFPS, String attachmentURL,
                               String attachmentTimeStampUTC){
         this.message = new MessageToDAContent(analysisTasks, latitude, longitude, altitude, heading, gimbalPitch, speed, attachmentName,

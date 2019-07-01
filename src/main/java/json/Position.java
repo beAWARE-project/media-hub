@@ -4,46 +4,53 @@
  * and open the template in the editor.
  */
 package json;
-
+import java.util.List;
 /**
  *
  * @author andreadisst
  */
 public class Position {
-    
-    float latitude;
-    float longitude;
-    float altitude;
-    int heading;
-    int gimbalPitch;
+
+    List<Float> latitude;
+    List<Float> longitude;
+    List<Float> altitude;
+    List<Integer> heading;
+    List<Integer> gimbalPitch;
+
+//    float latitude;
+//    float longitude;
+//    float altitude;
+//    int heading;
+//    int gimbalPitch;
     float speed;
-    
+
     public Position(){
-        
+
     }
-    
-    public float getLatitude(){
-        return latitude;
-    }
-    
-    public float getLongitude(){
+
+
+    public List<Float> getLongitude(){
         return longitude;
     }
-    
-    public float getAltitude(){
+
+    public List<Float> getLatitude(){
+        return latitude;
+    }
+
+    public List<Float> getAltitude(){
         return altitude;
     }
-    
-    public int getHeading(){
+
+    public List<Integer> getHeading(){
         return heading;
     }
-    
-    public int getGimbalPitch(){
+
+    public List<Integer> getGimbalPitch(){
         return gimbalPitch;
     }
-    
+
     public float getSpeed(){
         return speed;
     }
-    
+
 }

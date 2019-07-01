@@ -41,7 +41,6 @@ public class IncidentReportBody {
     public Position getPosition(){
         return position;
     }
-    
     public String getIncidentID(){
         return incidentID;
     }
