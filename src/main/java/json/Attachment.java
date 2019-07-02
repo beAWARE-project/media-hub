@@ -41,7 +41,7 @@ public class Attachment {
     }
     
     public String getAttachmentFormat(){
-        return attachmentType;
+        return attachmentFormat;
     }
     
     public int getAttachmentWidth(){
