@@ -16,15 +16,8 @@ import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
-import json.Attachment;
-import json.Header;
-import json.TOP019UAVMediaAnalyzed;
-import json.TOP019UAVMediaAnalyzedBody;
-import json.IncidentReport;
-import json.MessageFromDA;
-import json.MessageToDA;
-import json.Position;
-import json.SimplePosition;
+
+import json.*;
 import mykafka.Bus;
 
 public class DronesRequester extends Thread{
@@ -33,12 +26,12 @@ public class DronesRequester extends Thread{
     DataOutputStream dout;
     Gson gson = new GsonBuilder().disableHtmlEscaping().create();
     String over = "Msg from DA received";
-    IncidentReport incidentReport;
+    IncidentReportList incidentReport;
     Attachment attachment;
     Bus bus = new Bus();
     BufferedWriter writer;
     
-    public DronesRequester(IncidentReport incidentReport, Attachment attachment){
+    public DronesRequester(IncidentReportList incidentReport, Attachment attachment){
         this.incidentReport = incidentReport;
         this.attachment = attachment;
     }

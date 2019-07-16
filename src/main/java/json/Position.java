@@ -11,11 +11,11 @@ import java.util.List;
  */
 public class Position {
 
-    List<Float> latitude;
-    List<Float> longitude;
-    List<Float> altitude;
-    List<Integer> heading;
-    List<Integer> gimbalPitch;
+    float latitude;
+    float longitude;
+    float altitude;
+    int heading;
+    int gimbalPitch;
 
 //    float latitude;
 //    float longitude;
@@ -29,23 +29,23 @@ public class Position {
     }
 
 
-    public List<Float> getLongitude(){
+    public float getLongitude(){
         return longitude;
     }
 
-    public List<Float> getLatitude(){
+    public float getLatitude(){
         return latitude;
     }
 
-    public List<Float> getAltitude(){
+    public float getAltitude(){
         return altitude;
     }
 
-    public List<Integer> getHeading(){
+    public int getHeading(){
         return heading;
     }
 
-    public List<Integer> getGimbalPitch(){
+    public int getGimbalPitch(){
         return gimbalPitch;
     }
 
