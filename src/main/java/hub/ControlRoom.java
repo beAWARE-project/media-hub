@@ -3,6 +3,10 @@ package hub;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import java.util.Arrays;
+
+import json.IncidentReportList;
+import json.Header;
+import json.IncidentReportHeader;
 import mykafka.BusReader;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -36,27 +40,30 @@ public class ControlRoom {
         BusReader busReader = new BusReader();
         KafkaConsumer<String, String> kafkaConsumer = busReader.getKafkaConsumer();
         kafkaConsumer.subscribe(Arrays.asList(Configuration.incident_report_topic,Configuration.uavp_message_topic));
-        
+
         try {
             while (true) {
                 ConsumerRecords<String, String> records = kafkaConsumer.poll(100);
                 for (ConsumerRecord<String, String> record : records)
                 {
                     String message = record.value();
-                    
+
                     //BufferedWriter writer = new BufferedWriter(new FileWriter(logFilename));
                     //writer.write("Message consumed: " + message + "\n");
                     System.out.println("Message consumed: " + message);
-                    
-                    Type type = new TypeToken<IncidentReport>() {}.getType();
-                    
-                    
+
+
+                    Type header = new TypeToken<IncidentReportHeader>() {}.getType();
+
                     try{
-                        IncidentReport incidentReport = gson.fromJson(message, type);
-                        
-                        if( incidentReport.getHeader().getTopicName().equals(Configuration.incident_report_topic) ){
-                            if( incidentReport.getHeader().getSender().equals("FRAPP") || incidentReport.getHeader().getSender().equals("SCAPP") || incidentReport.getHeader().getSender().contains("CCTV") ){
+                        //
+                        IncidentReportHeader incidentReportHeader = gson.fromJson(message, header);
+
+                        if( incidentReportHeader.getHeader().getTopicName().equals(Configuration.incident_report_topic) ){
+                            if( incidentReportHeader.getHeader().getSender().equals("FRAPP") || incidentReportHeader.getHeader().getSender().equals("SCAPP") || incidentReportHeader.getHeader().getSender().contains("CCTV") ){
                                 //writer.write("Sender is APP\n");
+                                Type type = new TypeToken<IncidentReport>() {}.getType();
+                                IncidentReport incidentReport = gson.fromJson(message, type);
                                 for(Attachment attachment : incidentReport.getBody().getAttachments()){
                                     //writer.write("Has attachment\n");
                                     switch(attachment.getAttachmentType()){
@@ -76,7 +83,9 @@ public class ControlRoom {
                                     }
                                 }
                             }
-                        }else if( incidentReport.getHeader().getTopicName().equals(Configuration.uavp_message_topic) ){
+                        }else if( incidentReportHeader.getHeader().getTopicName().equals(Configuration.uavp_message_topic) ){
+                            Type type = new TypeToken<IncidentReportList>() {}.getType();
+                            IncidentReportList incidentReport = gson.fromJson(message, type);
                             for(Attachment attachment : incidentReport.getBody().getAttachments()){
                                 DronesRequester dronesRequester = new DronesRequester(incidentReport, attachment);
                                 dronesRequester.start();
