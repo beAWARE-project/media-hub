@@ -63,7 +63,7 @@ public class DronesRequester extends Thread{
             if(messageFromDA.getMediaAnalyzed().equals("") && messageFromDA.getMediaAnalysis().equals("") && messageFromDA.getIncidentDetected()==false){
                 //do nothing
             }else{
-                TOP019UAVMediaAnalyzedBody mediaAnalyzedBody = new TOP019UAVMediaAnalyzedBody(messageFromDA.getIncidentDetected(), attachment.getAttachmentTimeStampUTC() , messageFromDA.getAnalysisTasks(), messageFromDA.getEvacuationStop() , new SimplePosition(messageFromDA.getLatitude(),messageFromDA.getLongitude()), incidentReport.getBody().getIncidentID(), /*attachment.getAttachmentURL(), */messageFromDA.getMediaAnalyzed(), messageFromDA.getMediaAnalysis());
+                TOP019UAVMediaAnalyzedBody mediaAnalyzedBody = new TOP019UAVMediaAnalyzedBody(messageFromDA.getIncidentDetected(), attachment.getAttachmentTimeStampUTC() , incidentReport.getBody().getAnalysisTasks(), incidentReport.getBody().getEvacuationStop() , new SimplePosition(messageFromDA.getLatitude(),messageFromDA.getLongitude()), incidentReport.getBody().getIncidentID(), /*attachment.getAttachmentURL(), */messageFromDA.getMediaAnalyzed(), messageFromDA.getMediaAnalysis());
                 Header header = incidentReport.getHeader();
                 header.setTopicName(Configuration.media_analyzed_topic);
                 TOP019UAVMediaAnalyzed mediaAnalyzed = new TOP019UAVMediaAnalyzed(header, mediaAnalyzedBody);
@@ -71,7 +71,7 @@ public class DronesRequester extends Thread{
                 bus.post(Configuration.media_analyzed_topic, message);
             }
             
-        } catch (IOException | InterruptedException | ExecutionException | TimeoutException ex) {
+        } catch (IOException | InterruptedException | ExecutionException | TimeoutException  ex) {
             
         }finally{
             try{

@@ -19,8 +19,8 @@ public class MessageFromDA {
         
     }
     
-    public MessageFromDA(String media_analyzed, String media_analysis, boolean incident_detected, float latitude, float longitude, List<String> analysisTasks, boolean EvacuationStop){
-        this.message = new MessageFromDAContent(media_analyzed, media_analysis, incident_detected, latitude, longitude, analysisTasks, EvacuationStop);
+    public MessageFromDA(String media_analyzed, String media_analysis, boolean incident_detected, float latitude, float longitude){
+        this.message = new MessageFromDAContent(media_analyzed, media_analysis, incident_detected, latitude, longitude);
     }
     
     public String getMediaAnalyzed(){
@@ -43,11 +43,4 @@ public class MessageFromDA {
         return message.getLongitude();
     }
 
-    public List<String> getAnalysisTasks(){
-        return message.getAnalysisTasks();
-    }
-
-    public boolean getEvacuationStop(){
-        return message.getEvacuationStop();
-    }
 }

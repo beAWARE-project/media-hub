@@ -27,6 +27,7 @@ public class IncidentReportBody {
     String title;
     String description;
     List<String> analysisTasks;
+    boolean EvacuationStop;
     Position position;
     List<Attachment> attachments;
     
@@ -58,5 +59,7 @@ public class IncidentReportBody {
     }
     
     public List<String> getAnalysisTasks(){ return analysisTasks; }
+
+    public boolean getEvacuationStop(){ return EvacuationStop; }
     
 }

@@ -17,11 +17,11 @@ public class IncidentReportBodyList {
     String title;
     String description;
     List<String> analysisTasks;
+    boolean EvacuationStop;
     PositionDA position;
     List<Attachment> attachments = new ArrayList<>();
 
     public IncidentReportBodyList(){
-
     }
 
     public List<Attachment> getAttachments(){
@@ -47,7 +47,6 @@ public class IncidentReportBodyList {
         return incidentType;
     }
 
-    public List<String> getAnalysisTasks(){
-        return analysisTasks;
-    }
+    public List<String> getAnalysisTasks(){ return analysisTasks;}
+    public boolean getEvacuationStop(){ return EvacuationStop; }
 }
