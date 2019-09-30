@@ -5,6 +5,9 @@
  */
 package json;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author andreadisst
@@ -18,15 +21,19 @@ public class TOP019UAVMediaAnalyzedBody {
     //String media_original;
     String media_analyzed;
     String media_analysis;
+    List<String> analysisTasks = new ArrayList<>();
+    boolean EvacuationStop;
     
     public TOP019UAVMediaAnalyzedBody(){
         
     }
     
-    public TOP019UAVMediaAnalyzedBody(boolean incident_detected, String media_timestamp, SimplePosition location, String incidentID,
+    public TOP019UAVMediaAnalyzedBody(boolean incident_detected, String media_timestamp,List<String> analysisTasks,boolean EvacuationStop, SimplePosition location, String incidentID,
                                 /*String media_original, */String media_analyzed, String media_analysis){
         this.incident_detected = incident_detected;
         this.media_timestamp = media_timestamp;
+        this.analysisTasks = analysisTasks;
+        this.EvacuationStop = EvacuationStop;
         this.location = location;
         this.incidentID = incidentID;
         //this.media_original = media_original;
