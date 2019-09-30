@@ -21,7 +21,7 @@ public class TOP019UAVMediaAnalyzedBody {
     //String media_original;
     String media_analyzed;
     String media_analysis;
-    List<String> analysisTasks = new ArrayList<>();
+    List<String> analysisTasks;
     boolean EvacuationStop;
     
     public TOP019UAVMediaAnalyzedBody(){

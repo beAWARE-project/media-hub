@@ -28,7 +28,7 @@ public class IncidentReportBody {
     String description;
     List<String> analysisTasks;
     Position position;
-    List<Attachment> attachments = new ArrayList<>();
+    List<Attachment> attachments;
     
     public IncidentReportBody(){
         
@@ -57,8 +57,6 @@ public class IncidentReportBody {
         return incidentType;
     }
     
-    public List<String> getAnalysisTasks(){
-        return analysisTasks;
-    }
+    public List<String> getAnalysisTasks(){ return analysisTasks; }
     
 }
