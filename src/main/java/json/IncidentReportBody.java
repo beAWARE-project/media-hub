@@ -29,7 +29,7 @@ public class IncidentReportBody {
     List<String> analysisTasks;
     boolean EvacuationStop;
     Position position;
-    List<Attachment> attachments;
+    List<Attachment> attachments = new ArrayList<>();
     
     public IncidentReportBody(){
         
