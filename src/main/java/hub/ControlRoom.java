@@ -2,6 +2,8 @@ package hub;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import json.*;
@@ -15,6 +17,8 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Hashtable;
+import java.util.List;
+
 import utils.CDR;
 
 /*
@@ -39,6 +43,9 @@ public class ControlRoom {
         kafkaConsumer.subscribe(Arrays.asList(Configuration.incident_report_topic,Configuration.uavp_message_topic));
 
         Hashtable<String, SimplePosition> evacuationMissionsMap = new Hashtable<String, SimplePosition>();
+        evacuationMissionsMap.clear();
+        Hashtable<String, ArrayList<DronesRequester>> threadMissionsMap = new Hashtable<String,ArrayList<DronesRequester>>();
+        threadMissionsMap.clear();
 
         try {
             while (true) {
@@ -94,11 +101,30 @@ public class ControlRoom {
                                     sp = new SimplePosition(incidentReport.getBody().getPosition().getLatitude().get(0), incidentReport.getBody().getPosition().getLongitude().get(0));
                                     evacuationMissionsMap.put(incidentReportBody.getIncidentID(), sp);
                                 }
+                                if((evacuationMissionsMap.get(incidentReportBody.getIncidentID()) !=  null) && ( incidentReportBody.getEvacuationStop() == true)){
+                                    for (Attachment attachment : incidentReportBody.getAttachments()) {
+                                        DronesRequesterFinal dronesRequesterFinal = new DronesRequesterFinal(incidentReport, attachment, evacuationMissionsMap, threadMissionsMap);
+                                        dronesRequesterFinal.start();
+                                    }
+                                }
+                                else {
+                                    for (Attachment attachment : incidentReportBody.getAttachments()) {
+                                        DronesRequester dronesRequester = new DronesRequester(incidentReport, attachment, evacuationMissionsMap);
+                                        ArrayList<DronesRequester> arrThreads;
+                                        if (threadMissionsMap.get(incidentReportBody.getIncidentID()) == null) {
+                                            arrThreads = new ArrayList<DronesRequester>();
+                                            threadMissionsMap.put(incidentReportBody.getIncidentID(), arrThreads);
+                                            arrThreads.add(dronesRequester);
+                                        } else {
+                                            arrThreads = threadMissionsMap.get(incidentReportBody.getIncidentID());
+                                            arrThreads.add(dronesRequester);
+                                        }
+                                        dronesRequester.start();
+
+                                    }
+                                }
                             }
-                            for (Attachment attachment : incidentReportBody.getAttachments()) {
-                                DronesRequester dronesRequester = new DronesRequester(incidentReport, attachment, evacuationMissionsMap);
-                                dronesRequester.start();
-                            }
+
                         }
                         
                         //writer.close();
