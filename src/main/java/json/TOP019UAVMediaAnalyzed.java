@@ -22,5 +22,5 @@ public class TOP019UAVMediaAnalyzed {
         this.header = header;
         this.body = body;
     }
-    
+
 }

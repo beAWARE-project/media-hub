@@ -4,9 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import java.util.Arrays;
 
-import json.IncidentReportList;
-import json.Header;
-import json.IncidentReportHeader;
+import json.*;
 import mykafka.BusReader;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -16,8 +14,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import json.Attachment;
-import json.IncidentReport;
+import java.util.Hashtable;
 import utils.CDR;
 
 /*
@@ -40,6 +37,8 @@ public class ControlRoom {
         BusReader busReader = new BusReader();
         KafkaConsumer<String, String> kafkaConsumer = busReader.getKafkaConsumer();
         kafkaConsumer.subscribe(Arrays.asList(Configuration.incident_report_topic,Configuration.uavp_message_topic));
+
+        Hashtable<String, SimplePosition> evacuationMissionsMap = new Hashtable<String, SimplePosition>();
 
         try {
             while (true) {
@@ -86,8 +85,21 @@ public class ControlRoom {
                         }else if( incidentReportHeader.getHeader().getTopicName().equals(Configuration.uavp_message_topic) ){
                             Type type = new TypeToken<IncidentReportList>() {}.getType();
                             IncidentReportList incidentReport = gson.fromJson(message, type);
-                            for(Attachment attachment : incidentReport.getBody().getAttachments()){
-                                DronesRequester dronesRequester = new DronesRequester(incidentReport, attachment);
+                            IncidentReportBodyList incidentReportBody = incidentReport.getBody();
+                            String analTask = incidentReportBody.getAnalysisTasks().get(0);
+                            boolean createLastFromDrones = false;
+                            if(analTask.equals("Evacuation")){
+                                SimplePosition sp;
+                                if((evacuationMissionsMap.get(incidentReportBody.getIncidentID()) ==  null) && ( incidentReportBody.getEvacuationStop() == false)) {
+                                    sp = new SimplePosition(incidentReport.getBody().getPosition().getLatitude().get(0), incidentReport.getBody().getPosition().getLongitude().get(0));
+                                    evacuationMissionsMap.put(incidentReportBody.getIncidentID(), sp);
+                                }
+                                else if((evacuationMissionsMap.get(incidentReportBody.getIncidentID()) ==  null) && ( incidentReportBody.getEvacuationStop() == true)){
+                                    createLastFromDrones = true;
+                                }
+                            }
+                            for (Attachment attachment : incidentReportBody.getAttachments()) {
+                                DronesRequester dronesRequester = new DronesRequester(incidentReport, attachment, evacuationMissionsMap);
                                 dronesRequester.start();
                             }
                         }

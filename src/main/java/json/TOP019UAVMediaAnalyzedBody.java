@@ -40,5 +40,7 @@ public class TOP019UAVMediaAnalyzedBody {
         this.media_analyzed = media_analyzed;
         this.media_analysis = media_analysis;
     }
-    
+    public void setPosition(SimplePosition location){this.location = location;}
+    public void setIncidentID(String incidentID){this.incidentID = incidentID;}
+    public void setTimestamp(String media_timestamp){this.media_timestamp = media_timestamp;}
 }
