@@ -22,9 +22,6 @@ import jdk.nashorn.internal.parser.JSONParser;
 import json.*;
 import mykafka.Bus;
 
-import java.io.FileReader;
-import java.io.IOException;
-
 public class DronesRequester extends Thread{
     Socket soc;
     DataInputStream din;

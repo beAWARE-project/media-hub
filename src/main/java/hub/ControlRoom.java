@@ -87,15 +87,12 @@ public class ControlRoom {
                             IncidentReportList incidentReport = gson.fromJson(message, type);
                             IncidentReportBodyList incidentReportBody = incidentReport.getBody();
                             String analTask = incidentReportBody.getAnalysisTasks().get(0);
-                            boolean createLastFromDrones = false;
+
                             if(analTask.equals("Evacuation")){
                                 SimplePosition sp;
                                 if((evacuationMissionsMap.get(incidentReportBody.getIncidentID()) ==  null) && ( incidentReportBody.getEvacuationStop() == false)) {
                                     sp = new SimplePosition(incidentReport.getBody().getPosition().getLatitude().get(0), incidentReport.getBody().getPosition().getLongitude().get(0));
                                     evacuationMissionsMap.put(incidentReportBody.getIncidentID(), sp);
-                                }
-                                else if((evacuationMissionsMap.get(incidentReportBody.getIncidentID()) ==  null) && ( incidentReportBody.getEvacuationStop() == true)){
-                                    createLastFromDrones = true;
                                 }
                             }
                             for (Attachment attachment : incidentReportBody.getAttachments()) {
