@@ -124,6 +124,13 @@ public class ControlRoom {
                                     }
                                 }
                             }
+                            else{
+                                for(Attachment attachment : incidentReport.getBody().getAttachments()){
+                                    DronesRequester dronesRequester = new DronesRequester(incidentReport, attachment, evacuationMissionsMap);
+                                    dronesRequester.start();
+                                }
+                            }
+
 
                         }
                         

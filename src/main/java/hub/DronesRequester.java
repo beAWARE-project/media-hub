@@ -18,7 +18,6 @@ import java.util.Hashtable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
-import jdk.nashorn.internal.parser.JSONParser;
 import json.*;
 import mykafka.Bus;
 
@@ -67,7 +66,8 @@ public class DronesRequester extends Thread{
             if (messageFromDA.getMediaAnalyzed().equals("") && messageFromDA.getMediaAnalysis().equals("") && messageFromDA.getIncidentDetected() == false) {
                 //do nothing
             } else {
-                if(messageFromDA.getIncidentDetected() == true)
+                String analTask = incidentReport.getBody().getAnalysisTasks().get(0);
+                if( analTask.equals("Evacuation") &&  messageFromDA.getIncidentDetected() == true)
                     evacuationMissionMap.replace(incidentReport.getBody().getIncidentID(), new SimplePosition(messageFromDA.getLatitude(), messageFromDA.getLongitude()));
                 TOP019UAVMediaAnalyzedBody mediaAnalyzedBody = new TOP019UAVMediaAnalyzedBody(messageFromDA.getIncidentDetected(), attachment.getAttachmentTimeStampUTC(), incidentReport.getBody().getAnalysisTasks(), incidentReport.getBody().getEvacuationStop(), new SimplePosition(messageFromDA.getLatitude(), messageFromDA.getLongitude()), incidentReport.getBody().getIncidentID(), /*attachment.getAttachmentURL(), */messageFromDA.getMediaAnalyzed(), messageFromDA.getMediaAnalysis());
                 Header header = incidentReport.getHeader();
