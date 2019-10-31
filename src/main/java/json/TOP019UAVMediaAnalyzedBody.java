@@ -18,6 +18,7 @@ public class TOP019UAVMediaAnalyzedBody {
     String media_timestamp;
     SimplePosition location;
     String incidentID;
+    String language;
     //String media_original;
     String media_analyzed;
     String media_analysis;
@@ -28,7 +29,7 @@ public class TOP019UAVMediaAnalyzedBody {
         
     }
     
-    public TOP019UAVMediaAnalyzedBody(boolean incident_detected, String media_timestamp,List<String> analysisTasks,boolean EvacuationStop, SimplePosition location, String incidentID,
+    public TOP019UAVMediaAnalyzedBody(boolean incident_detected, String media_timestamp,List<String> analysisTasks,boolean EvacuationStop, SimplePosition location, String incidentID, String language,
                                 /*String media_original, */String media_analyzed, String media_analysis){
         this.incident_detected = incident_detected;
         this.media_timestamp = media_timestamp;
@@ -36,6 +37,7 @@ public class TOP019UAVMediaAnalyzedBody {
         this.EvacuationStop = EvacuationStop;
         this.location = location;
         this.incidentID = incidentID;
+        this.language = language;
         //this.media_original = media_original;
         this.media_analyzed = media_analyzed;
         this.media_analysis = media_analysis;

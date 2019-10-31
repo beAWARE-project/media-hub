@@ -69,7 +69,7 @@ public class DronesRequester extends Thread{
                 String analTask = incidentReport.getBody().getAnalysisTasks().get(0);
                 if( analTask.equals("Evacuation") &&  messageFromDA.getIncidentDetected() == true)
                     evacuationMissionMap.replace(incidentReport.getBody().getIncidentID(), new SimplePosition(messageFromDA.getLatitude(), messageFromDA.getLongitude()));
-                TOP019UAVMediaAnalyzedBody mediaAnalyzedBody = new TOP019UAVMediaAnalyzedBody(messageFromDA.getIncidentDetected(), attachment.getAttachmentTimeStampUTC(), incidentReport.getBody().getAnalysisTasks(), incidentReport.getBody().getEvacuationStop(), new SimplePosition(messageFromDA.getLatitude(), messageFromDA.getLongitude()), incidentReport.getBody().getIncidentID(), /*attachment.getAttachmentURL(), */messageFromDA.getMediaAnalyzed(), messageFromDA.getMediaAnalysis());
+                TOP019UAVMediaAnalyzedBody mediaAnalyzedBody = new TOP019UAVMediaAnalyzedBody(messageFromDA.getIncidentDetected(), attachment.getAttachmentTimeStampUTC(), incidentReport.getBody().getAnalysisTasks(), incidentReport.getBody().getEvacuationStop(), new SimplePosition(messageFromDA.getLatitude(), messageFromDA.getLongitude()), incidentReport.getBody().getIncidentID(), incidentReport.getBody().getLanguage(),/*attachment.getAttachmentURL(), */messageFromDA.getMediaAnalyzed(), messageFromDA.getMediaAnalysis());
                 Header header = incidentReport.getHeader();
                 header.setTopicName(Configuration.media_analyzed_topic);
                 TOP019UAVMediaAnalyzed mediaAnalyzed = new TOP019UAVMediaAnalyzed(header, mediaAnalyzedBody);
