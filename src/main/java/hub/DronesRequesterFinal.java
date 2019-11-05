@@ -63,6 +63,7 @@ public class DronesRequesterFinal extends Thread{
                     String json = "{\"incident_detected\": false,\"media_timestamp\": \"2019-09-24T12:03:27Z\",\"analysisTasks\": [\"Evacuation\"],\"EvacuationStop\": true,\"location\": {\"latitude\": 0,\"longitude\": 0},\"incidentID\": \"INC_UAVP_@sinst-id-12ef3240-ccba-11e9-a234-615883b44fb6\",\"media_analyzed\": \"Unknown\",\"media_analysis\": \"https://beaware-1.eu-de.containers.appdomain.cloud/object-store/Drones/sinst-id-12ef3240-ccba-11e9-a234-615883b44fb6/videoPart00030_output.json\"}";
                     TOP019UAVMediaAnalyzedBody mediaAnalyzedBody = gson.fromJson(json, TOP019UAVMediaAnalyzedBody.class);
                     mediaAnalyzedBody.setIncidentID(incidentReport.getBody().getIncidentID());
+                    mediaAnalyzedBody.setLanguage(incidentReport.getBody().getLanguage());
                     mediaAnalyzedBody.setPosition(sp);
 
                     TOP019UAVMediaAnalyzed mediaAnalyzed = new TOP019UAVMediaAnalyzed(header, mediaAnalyzedBody);
