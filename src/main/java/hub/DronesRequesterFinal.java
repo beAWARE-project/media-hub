@@ -60,7 +60,7 @@ public class DronesRequesterFinal extends Thread{
                     evacuationMissionMap.remove(incidentReport.getBody().getIncidentID());
                     Header header = incidentReport.getHeader();
                     header.setTopicName(Configuration.media_analyzed_topic);
-                    String json = "{\"incident_detected\": false,\"media_timestamp\": \"2019-09-24T12:03:27Z\",\"analysisTasks\": [\"Evacuation\"],\"EvacuationStop\": true,\"location\": {\"latitude\": 0,\"longitude\": 0},\"incidentID\": \"INC_UAVP_@sinst-id-12ef3240-ccba-11e9-a234-615883b44fb6\",\"media_analyzed\": \"Unknown\",\"media_analysis\": \"https://beaware-1.eu-de.containers.appdomain.cloud/object-store/Drones/sinst-id-12ef3240-ccba-11e9-a234-615883b44fb6/videoPart00030_output.json\"}";
+                    String json = "{\"incident_detected\": false,\"media_timestamp\": \"2019-09-24T12:03:27Z\",\"analysisTasks\": [\"Evacuation\"],\"EvacuationStop\": true,\"location\": {\"latitude\": 0,\"longitude\": 0},\"incidentID\": \"INC_UAVP_@sinst-id-12ef3240-ccba-11e9-a234-615883b44fb6\",\"media_analyzed\": \"https://beaware-1.eu-de.containers.appdomain.cloud/object-store/Drones/sinst-id-df3484a0-f22a-11e9-a04f-8144ab356bbe-no-people2/videoPart00140_output.webm\",\"media_analysis\": \"https://beaware-1.eu-de.containers.appdomain.cloud/object-store/Drones/sinst-id-12ef3240-ccba-11e9-a234-615883b44fb6/videoPart00030_output.json\"}";
                     TOP019UAVMediaAnalyzedBody mediaAnalyzedBody = gson.fromJson(json, TOP019UAVMediaAnalyzedBody.class);
                     mediaAnalyzedBody.setIncidentID(incidentReport.getBody().getIncidentID());
                     mediaAnalyzedBody.setLanguage(incidentReport.getBody().getLanguage());
