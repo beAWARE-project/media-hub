@@ -1,4 +1,4 @@
-FROM openjdk:8
+FROM openjdk:8 
 
 COPY resources /usr/src/media-hub/resources
 
