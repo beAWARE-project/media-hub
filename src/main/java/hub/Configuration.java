@@ -25,7 +25,7 @@ public class Configuration {
     
     //drones analysis
     //public static String drones_IP = "160.40.49.112";//Linux Server
-    public static String drones_IP = "160.40.49.114"; //Windows Server
+    public static String drones_IP = "160.40.49.114"; //Windows Server 
     public static int drones_port = 6666;
     
     public static String JAAS_CONFIG_PROPERTY = "java.security.auth.login.config";
